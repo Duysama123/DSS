@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Đổi sang tiếng Anh -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Expert System</title>
+    <!-- Link đến file CSS ngoài -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Health Diagnosis Expert System</h1>
+        
+        <form action="{{ url_for('diagnose') }}" method="post">
+            <div class="nlp-input-area">
+                <label for="symptom_description">Please describe your symptoms (e.g., "I have a headache, fever, and a runny nose..."): </label>
+                <textarea id="symptom_description" name="symptom_description" rows="6" cols="70" placeholder="Enter your symptoms here..."></textarea>
+            </div>
+
+            <!-- Phần Checkbox (có thể để lại để debug/fallback hoặc xóa đi) -->
+            <div class="symptom-grid-container">
+                <h3>Or select from the list (for reference/testing):</h3>
+                <div class="symptom-grid">
+                    {% if symptoms_list_for_reference %}  <!-- Đổi tên biến cho rõ ràng -->
+                        {% for symptom in symptoms_list_for_reference %}
+                        <div class="symptom-item">
+                    <input type="checkbox" 
+                        id="cb_{{ symptom }}" 
+                        name="symptoms_selected"  
+                        value="{{ symptom }}">
+                    <label for="cb_{{ symptom }}">{{ symptom.replace('_', ' ') | title }}</label>
+                </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Symptom list could not be loaded. Please try again later.</p>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- Kết thúc phần Checkbox -->
+
+            <button type="submit">Get Diagnosis</button>
+        </form>
+    </div>
+    <!-- Ví dụ thêm vào cuối file index.html, trước thẻ </body> -->
+<!-- Ví dụ thêm vào cuối file index.html, trước thẻ </body> -->
+<div style="text-align: center; margin-top: 30px;"> <!-- Bọc trong div để dễ căn giữa -->
+    <a href="{{ url_for('history') }}" class="history-link-button center-link-button">View Diagnosis History (Current Session)</a>
+</div>
+
+    <footer>
+        <p>&copy; 2025 Health Diagnosis Expert System</p>
+    </footer>
+</body>
+</html>

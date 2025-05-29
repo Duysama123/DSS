@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Expert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Thêm style cho trang history nếu cần */
+        .history-entry {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .history-entry h4 {
+            margin-top: 0;
+            color: #333;
+        }
+        .history-entry p {
+            margin: 5px 0;
+        }
+        .history-symptoms-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .history-symptoms-list li {
+            display: inline-block;
+            background-color: #e0eaf1;
+            color: #34495e;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ title }}</h1>
+
+        {% if history_list %}
+            {% for entry in history_list %}
+            <div class="history-entry">
+                <h4>Diagnosis on: {{ entry.timestamp }}</h4>
+                <p><strong>Your Input:</strong> "{{ entry.user_input_text }}"</p>
+                {% if entry.processed_symptoms %}
+                    <p><strong>Processed Symptoms:</strong></p>
+                    <ul class="history-symptoms-list">
+                        {% for symptom in entry.processed_symptoms %}
+                            <li>{{ symptom.replace('_', ' ') | title }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <p><strong>Primary Source:</strong> {{ entry.primary_source }}</p>
+                <p><strong>Main Assessed Condition:</strong> {{ entry.primary_diagnosis.replace('_', ' ') | title if entry.primary_diagnosis else 'N/A' }} 
+                   {% if entry.primary_confidence_or_probability %}
+                       ({{ entry.primary_confidence_or_probability }})
+                   {% endif %}
+                </p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="info-message">No diagnosis history found for this session.</p>
+        {% endif %}
+
+        <p><a href="{{ url_for('index') }}" class="back-link">Back to Symptom Entry</a></p>
+    </div>
+</body>
+</html>

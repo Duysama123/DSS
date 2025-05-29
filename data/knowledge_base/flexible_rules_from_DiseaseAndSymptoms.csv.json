@@ -1,0 +1,447 @@
+[
+  {
+    "id": "RULE_FLEX_DS_001",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "blackheads",
+      "pus filled pimples",
+      "skin oiliness",
+      "scarring from spots"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "acne",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms: blackheads, pus filled pimples, skin oiliness, scarring from spots can be indicative of 'acne'. Scarring is often a later sign."
+  },
+  {
+    "id": "RULE_FLEX_DS_002",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "sneezing",
+      "lacrimation",
+      "itchy nose or throat",
+      "coryza"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "allergy",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms: continuous sneezing, lacrimation, itchy nose or throat, coryza can be indicative of 'allergy'."
+  },
+  {
+    "id": "RULE_FLEX_DS_003",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "hip pain",
+      "hip stiffness or tightness",
+      "muscle weakness around hip",
+      "painful walking",
+      "swelling of hip joint"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "arthritis_of_the_hip",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: hip pain, hip stiffness or tightness, muscle weakness around hip, painful walking, swelling of hip joint can be indicative of 'arthritis_of_the_hip'."
+  },
+  {
+    "id": "RULE_FLEX_DS_004",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "breathlessness episodes",
+      "cough worse at night or exercise",
+      "wheezing",
+      "chest tightness",
+      "mucoid sputum"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "asthma",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: breathlessness episodes, cough worse at night or exercise, wheezing, chest tightness, mucoid sputum can be indicative of 'asthma'."
+  },
+  {
+    "id": "RULE_FLEX_DS_005",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "fatigue",
+      "headache",
+      "fever low or high",
+      "intense itching",
+      "loss of appetite",
+      "malaise",
+      "red spots evolving to fluid filled blisters",
+      "swollen lymph nodes"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "chickenpox",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: fatigue, headache, fever, intense itching, loss of appetite, malaise, red spots evolving to fluid filled blisters, swollen lymph nodes can be indicative of 'chickenpox'. The rash is key."
+  },
+  {
+    "id": "RULE_FLEX_DS_006",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "congestion",
+      "sneezing",
+      "mild cough",
+      "mild fatigue",
+      "mild headache",
+      "malaise",
+      "runny nose",
+      "sore throat",
+      "mild body aches"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "common_cold",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: congestion, sneezing, mild cough, mild fatigue, mild headache, malaise, runny nose, sore throat, mild body aches can be indicative of 'common_cold'."
+  },
+  {
+    "id": "RULE_FLEX_DS_007",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "sudden high fever",
+      "severe headache",
+      "pain behind the eyes",
+      "severe joint pain",
+      "severe muscle pain",
+      "skin rash appears after fever",
+      "mild bleeding tendency gums nose",
+      "nausea vomiting"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "dengue_fever",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: sudden high fever, severe headache, pain behind the eyes, severe joint pain, severe muscle pain, skin rash appears after fever, mild bleeding tendency, nausea vomiting can be indicative of 'dengue_fever'."
+  },
+  {
+    "id": "RULE_FLEX_DS_008",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "excessive thirst polydipsia",
+      "frequent urination polyuria",
+      "large volume of dilute urine",
+      "dehydration signs dry mouth skin",
+      "fatigue due to sleep disruption"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "diabetes_insipidus",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms, especially excessive thirst polydipsia and frequent urination polyuria: excessive thirst polydipsia, frequent urination polyuria, large volume of dilute urine, dehydration signs, fatigue due to sleep disruption can be indicative of 'diabetes_insipidus'."
+  },
+  {
+    "id": "RULE_FLEX_DS_009",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "skin rash hives or other",
+      "itching",
+      "swelling of face lips or tongue",
+      "fever after starting new drug",
+      "stomach upset or nausea after drug"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "drug_reaction",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms, particularly after starting a new medication: skin rash hives or other, itching, swelling of face lips or tongue, fever after starting new drug, stomach upset or nausea after drug can be indicative of 'drug_reaction'. Severe reactions like difficulty breathing require immediate medical attention."
+  },
+  {
+    "id": "RULE_FLEX_DS_010",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "itching scalp",
+      "patchy hair loss on scalp",
+      "scalp scaling or dandruff like flakes",
+      "black dots on scalp broken hairs",
+      "tender or inflamed patches on scalp"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "fungal_infection_of_the_hair",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms: itching scalp, patchy hair loss on scalp, scalp scaling or dandruff like flakes, black dots on scalp broken hairs, tender or inflamed patches on scalp can be indicative of 'fungal_infection_of_the_hair' (Tinea Capitis)."
+  },
+  {
+    "id": "RULE_FLEX_DS_011",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "chest pain pressure squeezing fullness",
+      "pain radiating to arm jaw neck or back",
+      "breathlessness shortness of breath",
+      "cold sweat",
+      "nausea or vomiting",
+      "dizziness or lightheadedness"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "heart_attack",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: chest pain pressure squeezing fullness, pain radiating to arm jaw neck or back, breathlessness shortness of breath, cold sweat, nausea or vomiting, dizziness or lightheadedness can be indicative of 'heart_attack'. This is a medical emergency."
+  },
+  {
+    "id": "RULE_FLEX_DS_012",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "yellowish skin jaundice",
+      "yellowing of eyes scleral icterus",
+      "dark urine tea colored",
+      "pale stools clay colored",
+      "abdominal pain upper right quadrant",
+      "fatigue",
+      "loss of appetite",
+      "nausea vomiting",
+      "history of exposure to toxins or certain medications"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "hepatitis_due_to_a_toxin",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms, especially jaundice and change in urine/stool color, with a possible history of toxin exposure: yellowish skin jaundice, yellowing of eyes scleral icterus, dark urine tea colored, pale stools clay colored, abdominal pain upper right quadrant, fatigue, loss of appetite, nausea vomiting can be indicative of 'hepatitis_due_to_a_toxin'."
+  },
+  {
+    "id": "RULE_FLEX_DS_013",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "persistent headache in pregnancy",
+      "visual disturbances blurred vision flashing lights in pregnancy",
+      "swelling of hands face or feet sudden in pregnancy",
+      "upper abdominal pain especially right side in pregnancy",
+      "dizziness in pregnancy"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "hypertension_of_pregnancy",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms during pregnancy: persistent headache, visual disturbances, sudden swelling of hands face or feet, upper abdominal pain, dizziness can be indicative of 'hypertension_of_pregnancy' (like preeclampsia). Medical evaluation is crucial."
+  },
+  {
+    "id": "RULE_FLEX_DS_014",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "sweating clamminess",
+      "shakiness tremors",
+      "palpitations fast heart rate",
+      "anxiety irritability",
+      "hunger",
+      "dizziness lightheadedness",
+      "blurred vision",
+      "fatigue weakness",
+      "headache",
+      "confusion difficulty concentrating",
+      "slurred speech if severe"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "hypoglycemia",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: sweating clamminess, shakiness tremors, palpitations fast heart rate, anxiety irritability, hunger, dizziness lightheadedness, blurred vision, fatigue weakness, headache, confusion difficulty concentrating, slurred speech if severe can be indicative of 'hypoglycemia'."
+  },
+  {
+    "id": "RULE_FLEX_DS_015",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "persistent fatigue lethargy",
+      "unexplained weight gain",
+      "cold intolerance",
+      "constipation",
+      "dry skin and hair",
+      "hair loss",
+      "muscle weakness aches or cramps",
+      "puffy face",
+      "hoarseness",
+      "depression or low mood",
+      "slow heart rate",
+      "goiter enlarged thyroid"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "hypothyroidism",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: persistent fatigue lethargy, unexplained weight gain, cold intolerance, constipation, dry skin and hair, hair loss, muscle weakness aches or cramps, puffy face, hoarseness, depression or low mood, slow heart rate, goiter enlarged thyroid can be indicative of 'hypothyroidism'."
+  },
+  {
+    "id": "RULE_FLEX_DS_016",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "red sores or blisters often around nose mouth",
+      "sores that rupture ooze fluid then form a yellowish brown crust honey colored",
+      "itching around sores",
+      "skin lesions that spread",
+      "mild fever sometimes"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "impetigo",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms, especially the characteristic honey-colored crusts: red sores or blisters often around nose mouth, sores that rupture ooze fluid then form a yellowish brown crust honey colored, itching around sores, skin lesions that spread, mild fever sometimes can be indicative of 'impetigo'."
+  },
+  {
+    "id": "RULE_FLEX_DS_017",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "diarrhoea watery or loose stools",
+      "vomiting",
+      "abdominal cramps and pain",
+      "nausea",
+      "signs of dehydration dry mouth sunken eyes decreased urination"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "infectious_gastroenteritis",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms, especially diarrhoea and/or vomiting: diarrhoea watery or loose stools, vomiting, abdominal cramps and pain, nausea, signs of dehydration can be indicative of 'infectious_gastroenteritis'."
+  },
+  {
+    "id": "RULE_FLEX_DS_018",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "cyclical fever episodes high fever",
+      "chills shaking",
+      "profuse sweating following fever",
+      "headache",
+      "muscle pain body aches",
+      "fatigue",
+      "nausea vomiting or diarrhoea"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "malaria",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms, particularly the cycle of fever, chills, and sweating: cyclical fever episodes high fever, chills shaking, profuse sweating following fever, headache, muscle pain body aches, fatigue, nausea vomiting or diarrhoea can be indicative of 'malaria', especially if in an endemic area."
+  },
+  {
+    "id": "RULE_FLEX_DS_019",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "moderate to severe headache often unilateral throbbing or pulsating",
+      "nausea with or without vomiting",
+      "sensitivity to light photophobia",
+      "sensitivity to sound phonophobia",
+      "visual disturbances aura e g flashing lights zig zag lines before or during headache"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "migraine",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: moderate to severe headache often unilateral throbbing or pulsating, nausea with or without vomiting, sensitivity to light photophobia, sensitivity to sound phonophobia, visual disturbances aura can be indicative of 'migraine'."
+  },
+  {
+    "id": "RULE_FLEX_DS_020",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "yellowish discoloration of skin and eyes in newborn",
+      "lethargy or difficulty waking in newborn",
+      "poor feeding or sucking in newborn",
+      "dark yellow urine in newborn",
+      "pale stools in newborn if severe"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "neonatal_jaundice",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms in a newborn, especially yellowish skin and eyes: yellowish discoloration of skin and eyes in newborn, lethargy or difficulty waking in newborn, poor feeding or sucking in newborn, dark yellow urine in newborn, pale stools in newborn if severe can be indicative of 'neonatal_jaundice'. Medical assessment is important."
+  },
+  {
+    "id": "RULE_FLEX_DS_021",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "joint pain worsens with activity improves with rest",
+      "joint stiffness especially in the morning or after inactivity less than 30 min",
+      "limited range of motion in joint",
+      "swelling around joint",
+      "grating or cracking sensation in joint crepitus",
+      "pain in specific joints knee hip hands spine"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "osteoarthritis",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: joint pain worsens with activity improves with rest, joint stiffness especially in the morning or after inactivity less than 30 min, limited range of motion in joint, swelling around joint, grating or cracking sensation in joint crepitus, pain in specific joints can be indicative of 'osteoarthritis'."
+  },
+  {
+    "id": "RULE_FLEX_DS_022",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "cough often producing phlegm greenish yellowish or bloody",
+      "fever sweating and shaking chills",
+      "shortness of breath or difficulty breathing",
+      "chest pain that worsens with breathing or coughing pleuritic pain",
+      "fatigue malaise",
+      "fast heart rate",
+      "confusion or changes in mental awareness especially in older adults"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "pneumonia",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: cough often producing phlegm, fever sweating and shaking chills, shortness of breath, chest pain that worsens with breathing or coughing, fatigue malaise, fast heart rate, confusion can be indicative of 'pneumonia'."
+  },
+  {
+    "id": "RULE_FLEX_DS_023",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "red patches of skin covered with thick silvery scales",
+      "itching burning or soreness of skin patches",
+      "dry cracked skin that may bleed",
+      "pitted ridged or thickened nails nail psoriasis",
+      "swollen and stiff joints psoriatic arthritis"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "psoriasis",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms, especially the characteristic skin patches: red patches of skin covered with thick silvery scales, itching burning or soreness of skin patches, dry cracked skin that may bleed, pitted ridged or thickened nails nail psoriasis, swollen and stiff joints psoriatic arthritis can be indicative of 'psoriasis'."
+  },
+  {
+    "id": "RULE_FLEX_DS_024",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "neck pain or back pain chronic or intermittent",
+      "stiffness in neck or back",
+      "radiating pain to arms or legs",
+      "numbness or tingling in limbs",
+      "weakness in limbs",
+      "headache originating from neck cervicogenic headache",
+      "dizziness or loss of balance if severe cervical spondylosis"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "spondylosis",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms: neck pain or back pain chronic or intermittent, stiffness in neck or back, radiating pain to arms or legs, numbness or tingling in limbs, weakness in limbs, headache originating from neck, dizziness or loss of balance can be indicative of 'spondylosis'."
+  },
+  {
+    "id": "RULE_FLEX_DS_025",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "persistent cough lasting 3 weeks or longer",
+      "coughing up blood or sputum mixed with blood hemoptysis",
+      "chest pain or pain with breathing or coughing",
+      "unintentional weight loss",
+      "fatigue extreme tiredness",
+      "fever often low grade especially in afternoon evening",
+      "night sweats",
+      "chills",
+      "loss of appetite",
+      "swollen lymph nodes especially in neck"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "tuberculosis",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms, particularly prolonged cough, weight loss, and night sweats: persistent cough lasting 3 weeks or longer, coughing up blood or sputum mixed with blood hemoptysis, chest pain or pain with breathing or coughing, unintentional weight loss, fatigue extreme tiredness, fever, night sweats, chills, loss of appetite, swollen lymph nodes can be indicative of 'tuberculosis'."
+  },
+  {
+    "id": "RULE_FLEX_DS_026",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "pain or burning sensation during urination dysuria",
+      "frequent urge to urinate urinary frequency",
+      "passing small amounts of urine frequently",
+      "cloudy dark or strong smelling urine",
+      "blood in urine hematuria",
+      "pain in lower abdomen or back pelvic pain or suprapubic discomfort"
+    ],
+    "min_symptoms_match": 2,
+    "then_disease": "urinary_tract_infection",
+    "confidence": 0.65,
+    "explanation": "Having at least 2 of the following symptoms: pain or burning sensation during urination dysuria, frequent urge to urinate urinary frequency, passing small amounts of urine frequently, cloudy dark or strong smelling urine, blood in urine hematuria, pain in lower abdomen or back can be indicative of 'urinary_tract_infection'."
+  },
+  {
+    "id": "RULE_FLEX_DS_027",
+    "source_dataset": "DiseaseAndSymptoms.csv",
+    "if_symptoms_list": [
+      "visible twisted enlarged veins often blue or dark purple on legs",
+      "aching pain or heavy feeling in legs",
+      "swelling in legs ankles and feet edema",
+      "muscle cramping or throbbing in legs especially at night",
+      "itching around one or more veins",
+      "skin discoloration or ulcers near ankle in severe cases"
+    ],
+    "min_symptoms_match": 3,
+    "then_disease": "varicose_veins",
+    "confidence": 0.65,
+    "explanation": "Having at least 3 of the following symptoms, with visible veins being key: visible twisted enlarged veins often blue or dark purple on legs, aching pain or heavy feeling in legs, swelling in legs ankles and feet edema, muscle cramping or throbbing in legs especially at night, itching around one or more veins, skin discoloration or ulcers near ankle in severe cases can be indicative of 'varicose_veins'."
+  }
+]

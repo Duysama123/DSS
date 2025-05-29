@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Expert System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ title }}</h1>
+
+        <!-- Hiển thị lỗi chung từ hệ thống (nếu có) -->
+        {% if results_data.error_message %}
+            <div class="error-message">
+                {{ results_data.error_message }}
+            </div>
+        {% endif %}
+
+        <!-- Hiển thị input của người dùng -->
+        {% if results_data.user_text_input and results_data.user_text_input != "N/A (Used checkbox selection)" and results_data.user_text_input != "N/A (Checkbox input might have been used)" %}
+        <div class="result-section card"> <!-- Thêm card -->
+            <h3>Your Symptom Description:</h3>
+            <p class="user-input-display">"{{ results_data.user_text_input }}"</p>
+        </div>
+        {% elif results_data.user_text_input %} <!-- Trường hợp input là từ checkbox (simplified) -->
+         <div class="result-section card">
+            <h3>Your Symptom Input Method:</h3>
+            <p class="user-input-display">Symptoms were selected via checkboxes.</p>
+        </div>
+        {% endif %}
+
+       <!-- Triệu chứng đã được xử lý -->
+        <div class="result-section card">
+            <h3>Symptoms Processed by System:</h3> 
+            {% if results_data.extracted_symptoms_for_display and "No valid symptoms were processed." not in results_data.extracted_symptoms_for_display and results_data.extracted_symptoms_for_display|length > 0 %}
+                <div class="symptom-tags-container">
+                    {% for symptom in results_data.extracted_symptoms_for_display %}
+                        <span class="symptom-tag">{{ symptom.replace('_', ' ') | title }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="info-message">No specific symptoms were identified or processed from your input.</p>
+            {% endif %}
+        </div>
+
+        <!-- Hiển thị nguồn chẩn đoán chính -->
+        {% if results_data.source_of_primary_diagnosis and results_data.source_of_primary_diagnosis != "No definitive source" %}
+        <div class="result-section card">
+             <h3>Primary Assessment Source: {{ results_data.source_of_primary_diagnosis }}</h3>
+        </div>
+        {% endif %}
+
+        <!-- Hiển thị các gợi ý chẩn đoán từ orchestrated_results -->
+        <div class="result-section card">
+            <h3>Diagnostic Suggestions:</h3>
+            {% if results_data.orchestrated_results and results_data.orchestrated_results[0] and not results_data.orchestrated_results[0].info and not results_data.orchestrated_results[0].error %}
+                {% for result_item in results_data.orchestrated_results %}
+                    <div class="result-item {% if result_item.type == 'rule' %}rule-item{% elif result_item.type == 'ml' %}prediction-item top-{{ loop.index }}{% endif %}">
+                        {% if result_item.type == 'rule' %}
+                            <strong>Rule-Based Suggestion:</strong> {{ result_item.disease.replace('_', ' ') | title }}<br>
+                            <strong>Confidence:</strong> {{ result_item.confidence }}<br>
+                            <p class="justified-text"><strong>Reasoning:</strong> {{ result_item.explanation }}</p>
+                        {% elif result_item.type == 'ml' %}
+                            <strong>AI Model Suggestion:</strong> {{ result_item.disease.replace('_', ' ') | title }}<br>
+                            <strong>Probability:</strong> {{ result_item.probability }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% elif results_data.orchestrated_results and results_data.orchestrated_results[0] and results_data.orchestrated_results[0].info %}
+                 <p class="info-message"><em>{{ results_data.orchestrated_results[0].info }}</em></p>
+            {% elif results_data.orchestrated_results and results_data.orchestrated_results[0] and results_data.orchestrated_results[0].error %}
+                 <p class="error-message">Error: {{ results_data.orchestrated_results[0].error }}</p>
+            {% else %}
+                <p class="info-message">No diagnostic suggestions available based on the processed symptoms.</p>
+            {% endif %}
+        </div>
+        
+        <!-- Hướng dẫn cụ thể cho bệnh (từ disease_details.json) -->
+        {% if results_data.guidance_package and results_data.guidance_package.details and results_data.guidance_package.details.display_name %}
+        <div class="result-section card guidance-text"> <!-- Thêm class card và guidance-text -->
+            <h3>Guidance for: {{ results_data.guidance_package.details.display_name | title }}</h3>
+            
+            {% if results_data.guidance_package.details.severity_level %}
+                <p><strong>Severity Level: </strong>
+                {% if results_data.guidance_package.details.severity_level.lower() == "emergency" %}
+                    <span class="severity-icon">🚑</span><span class="severity-high">{{ results_data.guidance_package.details.severity_level }}</span>
+                {% elif results_data.guidance_package.details.severity_level.lower() == "high" %}
+                    <span class="severity-icon">❗</span><span class="severity-high">{{ results_data.guidance_package.details.severity_level }}</span>
+                {% elif results_data.guidance_package.details.severity_level.lower() == "medium" %}
+                    <span class="severity-icon">⚠️</span><span class="severity-medium">{{ results_data.guidance_package.details.severity_level }}</span>
+                {% elif results_data.guidance_package.details.severity_level.lower() == "low" %}
+                    <span class="severity-icon">✔️</span><span class="severity-low">{{ results_data.guidance_package.details.severity_level }}</span>
+                {% else %}
+                    <span>{{ results_data.guidance_package.details.severity_level }}</span>
+                {% endif %}
+                </p>
+            {% endif %}
+
+            {% if results_data.guidance_package.details.severity_level and results_data.guidance_package.details.severity_level.lower() == "emergency" and results_data.guidance_package.details.emergency_advice %}
+                <div class="emergency-advice">
+                    <h4>URGENT ACTION REQUIRED:</h4>
+                    <p>{{ results_data.guidance_package.details.emergency_advice }}</p>
+                </div>
+            {% endif %}
+
+            {% if results_data.guidance_package.details.description %}
+                <h4>Overview:</h4> 
+                <p>{{ results_data.guidance_package.details.description }}</p>
+            {% endif %}
+
+            {% if results_data.guidance_package.details.symptoms_summary %}
+                <h4>Common Symptoms of this Condition:</h4>
+                <p>{{ results_data.guidance_package.details.symptoms_summary }}</p>
+            {% endif %}
+
+            {% if results_data.guidance_package.details.when_to_see_doctor %}
+                <h4>When to See a Doctor:</h4>
+                <p>{{ results_data.guidance_package.details.when_to_see_doctor }}</p>
+            {% endif %}
+
+            {% if results_data.guidance_package.details.self_care_tips and results_data.guidance_package.details.self_care_tips|length > 0 %}
+                <h4>Self-Care Tips:</h4>
+                <ul>
+                    {% for tip in results_data.guidance_package.details.self_care_tips %}
+                        <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Thông tin từ Wikipedia (nếu có) -->
+        {% if results_data.guidance_package and results_data.guidance_package.wikipedia %}
+        <div class="result-section card justified-text"> <!-- Thêm class card và justified-text -->
+            <h3>Further General Information (from Wikipedia):</h3>
+            {% set wiki = results_data.guidance_package.wikipedia %}
+            <h4>
+                <a href="{{ wiki.url }}" target="_blank" rel="noopener noreferrer">{{ wiki.title }}</a>
+            </h4>
+            <p class="wikipedia-summary">{{ wiki.summary }}</p> <!-- Thêm class để style riêng nếu muốn -->
+            {% if wiki.summary != "No summary available." and wiki.summary|length > 10 %}
+               <p><a href="{{ wiki.url }}" target="_blank" rel="noopener noreferrer">Read more on Wikipedia...</a></p>
+            {% endif %}
+        </div>
+        {% elif results_data.guidance_package and not results_data.guidance_package.details and not results_data.guidance_package.wikipedia %}
+             <div class="result-section card">
+                <h3>Guidance & Further Information:</h3>
+                <p class="info-message">No specific guidance or further information could be retrieved for the primary assessed condition.</p>
+            </div>
+        {% endif %}
+
+        <!-- Disclaimer -->
+        <div class="result-section" style="background-color: #f0f0f0; text-align: center; border-radius: 8px; padding: 15px;">
+             <p style="font-size: 0.9em; color: #555; margin:0;">
+                <strong>Important Disclaimer:</strong> This system provides preliminary health assessments and general information based on user input and available data. It is <strong>not a substitute for professional medical advice, diagnosis, or treatment</strong>. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition. If you think you may have a medical emergency, call your doctor or emergency services (e.g., 911, 999, 112) immediately. Never disregard professional medical advice or delay in seeking it because of something you have read from this system.
+            </p>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="back-link">Back to Symptom Entry</a>
+    </div>
+</body>
+</html>

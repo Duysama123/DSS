@@ -1,0 +1,446 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px; /* Giới hạn chiều rộng tối đa */
+    margin: 20px auto;
+    padding: 25px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p.instructions {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #555;
+}
+
+/* Styling cho NLP Input Area */
+.nlp-input-area {
+    margin-bottom: 30px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.nlp-input-area label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #34495e;
+}
+
+textarea[name="symptom_description"] {
+    width: calc(100% - 22px); /* Trừ padding và border */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical; /* Cho phép thay đổi chiều cao */
+    margin-bottom: 15px;
+}
+
+/* Styling cho Symptom Checkbox Grid (nếu bạn vẫn giữ) */
+.symptom-grid-container {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #eee;
+}
+
+.symptom-grid-container h3 {
+    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 1.1em;
+}
+
+.symptom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Tăng minmax một chút */
+    gap: 12px;
+    margin-bottom: 25px;
+    max-height: 300px; /* Giới hạn chiều cao và cho phép scroll */
+    overflow-y: auto; /* Thêm thanh cuộn dọc nếu cần */
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+}
+
+.symptom-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.symptom-item:hover {
+    background-color: #f0f8ff; /* AliceBlue */
+}
+
+.symptom-item input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.1); /* Làm checkbox to hơn một chút */
+}
+
+.symptom-item label {
+    margin-left: 0; /* Bỏ margin cũ */
+    color: #333;
+    cursor: pointer;
+    flex-grow: 1; /* Cho label chiếm hết không gian còn lại */
+}
+
+/* Styling cho Button */
+button[type="submit"] {
+    display: block;
+    width: 100%; /* Nút chiếm toàn bộ chiều rộng */
+    max-width: 250px; /* Giới hạn chiều rộng tối đa của nút */
+    margin: 20px auto 0 auto; /* Căn giữa nút */
+    padding: 12px 20px;
+    background-color: #3498db; /* Màu xanh dương đẹp hơn */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive adjustments (ví dụ) */
+@media (max-width: 600px) {
+    .symptom-grid {
+        grid-template-columns: 1fr; /* Một cột trên màn hình nhỏ */
+    }
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+}
+/* CSS cho Autocomplete (có thể đặt trong style.css) */
+    .autocomplete-items {
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        border-bottom: none;
+        border-top: none;
+        z-index: 99;
+        /*top: 100%;*/ /* Vị trí tương đối với input, cần điều chỉnh */
+        left: 0;
+        right: 0;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+    }
+    .autocomplete-items div {
+        padding: 10px;
+        cursor: pointer;
+        background-color: #fff; 
+        border-bottom: 1px solid #d4d4d4; 
+    }
+    .autocomplete-items div:hover {
+        background-color: #e9e9e9; 
+    }
+    .autocomplete-active { /* Khi dùng phím mũi tên để chọn */
+        background-color: DodgerBlue !important; 
+        color: #ffffff; 
+    }
+    #selected-symptoms-display .symptom-tag {
+        display: inline-block;
+        background-color: #e0e0e0;
+        padding: 3px 8px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        border-radius: 3px;
+        font-size: 0.9em;
+    }
+    #selected-symptoms-display .symptom-tag .remove-symptom {
+        margin-left: 5px;
+        color: red;
+        cursor: pointer;
+        font-weight: bold;
+    }
+/* CSS cho các tag triệu chứng đã chọn */
+    #selected-symptoms-list-container .symptom-tag {
+        display: inline-block;
+        background-color: #007bff; /* Màu xanh dương hơn */
+        color: white;
+        padding: 5px 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        border-radius: 15px; /* Bo tròn hơn */
+        font-size: 0.9em;
+        line-height: 1.5;
+    }
+    #selected-symptoms-list-container .symptom-tag .remove-symptom {
+        margin-left: 8px;
+        color: #ffdddd; /* Màu đỏ nhạt hơn trên nền xanh */
+        cursor: pointer;
+        font-weight: bold;
+    }
+     #selected-symptoms-list-container .symptom-tag .remove-symptom:hover {
+        color: white;
+    }
+    #selected-symptoms-list-container:empty::after { /* Hiển thị "None" nếu không có tag nào */
+        content: "None";
+        font-style: italic;
+        color: #6c757d;
+    }
+.result-section {
+            background-color: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .result-section h3 {
+            margin-top: 0;
+            color: #34495e;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .result-section h4 { /* Thêm style cho h4 nếu cần */
+            color: #2c3e50;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .user-input-display {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #495057;
+        }
+        .symptom-list-results li {
+            background-color: #eaf6ff;
+            padding: 5px 8px;
+            margin-bottom: 5px;
+            border-radius: 3px;
+            border: 1px solid #cce4ff;
+        }
+        .info-message {
+            color: #555;
+            font-style: italic;
+        }
+        .error-message { /* Dùng cho các lỗi chung */
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: .75rem 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        }
+        .emergency-advice { /* Style riêng cho cảnh báo khẩn cấp */
+            color: #D8000C; /* Màu đỏ đậm */
+            background-color: #FFD2D2; /* Màu nền đỏ nhạt */
+            border: 1px solid #D8000C;
+            border-left-width: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .emergency-advice h4 {
+             color: #D8000C !important; /* Đảm bảo màu chữ cho h4 trong emergency */
+             margin-top:0;
+        }
+
+        .severity-high { color: #D8000C; font-weight: bold; } /* Đỏ cho mức độ cao/khẩn */
+        .severity-medium { color: #FFA500; font-weight: bold; } /* Cam cho mức độ trung bình */
+        .severity-low { color: #008000; font-weight: bold;} /* Xanh lá cho mức độ thấp */
+
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 18px;
+            background-color: #555;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+        .back-link:hover {
+            background-color: #333;
+        }
+        /* ... (CSS hiện có của bạn) ... */
+
+        .card { /* Áp dụng cho các .result-section */
+            background-color: #ffffff; /* Nền trắng hơn cho card */
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
+            border-radius: 8px; /* Bo góc lớn hơn */
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card h3 {
+            color: #2c3e50; /* Màu đậm hơn cho tiêu đề card */
+            font-size: 1.4em;
+            border-bottom: 2px solid #ecf0f1; /* Đường kẻ rõ ràng hơn */
+        }
+
+        .symptom-tag {
+            display: inline-block;
+            background-color: #e0eaf1; /* Màu nền cho tag */
+            color: #34495e;
+            padding: 5px 10px;
+            margin: 3px;
+            border-radius: 15px; /* Bo tròn thành pill */
+            font-size: 0.9em;
+        }
+
+        .severity-icon {
+            margin-right: 5px;
+            font-size: 1.1em; /* Kích thước biểu tượng */
+        }
+
+        /* Ví dụ cho Accordion (cần JavaScript để hoạt động) */
+        .accordion-header {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+        .accordion-header:hover {
+            background-color: #f1f1f1;
+        }
+        .accordion-content {
+            padding: 0 15px;
+            display: none; /* Ẩn mặc định */
+            overflow: hidden;
+            background-color: white;
+            border: 1px solid #eee;
+            border-top: none;
+        }
+
+        /* Thêm line-height cho các đoạn văn bản dài */
+       /* Áp dụng căn đều cho các đoạn văn bản trong phần kết quả */
+        .result-section p, 
+        .result-section li { /* Áp dụng luôn cho các mục danh sách nếu muốn */
+            line-height: 1.6; /* Giữ lại hoặc điều chỉnh line-height */
+            text-align: justify;
+            -webkit-hyphens: auto; /* Tùy chọn: Thêm gạch nối tự động cho Webkit (Chrome, Safari) */
+            -moz-hyphens: auto;    /* Tùy chọn: Thêm gạch nối tự động cho Firefox */
+            -ms-hyphens: auto;     /* Tùy chọn: Thêm gạch nối tự động cho IE/Edge */
+            hyphens: auto;         /* Tùy chọn: Thêm gạch nối tự động chuẩn */
+        }
+        .prediction-item {
+            background-color: #f0f8ff; /* Màu nền nhạt cho dự đoán */
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #d0e7ff; /* Viền nhẹ */
+        }
+        .rule-item {
+            background-color: #fff3e0; /* Màu nền nhạt cho kết luận */
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 1px solid #ffe0b2; /* Viền nhẹ */
+        }
+        /* Bạn có thể muốn cụ thể hơn, ví dụ chỉ cho phần guidance */
+        .guidance-text p,
+        .guidance-text li {
+            text-align: justify;
+            hyphens: auto; /* Tùy chọn */
+        }
+
+        /* Hoặc cho phần tóm tắt Wikipedia */
+        .wikipedia-summary p {
+            text-align: justify;
+            hyphens: auto; /* Tùy chọn */
+        }
+                .symptom-tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* Khoảng cách giữa các tag */
+        }
+        .justified-text, 
+        .justified-text li { /* Nếu bạn thêm class vào ul, thì li bên trong cũng cần */
+            text-align: justify;
+            hyphens: auto; /* Tùy chọn */
+            line-height: 1.6;
+        }
+                .justified-text ul {
+            padding-left: 20px; /* Để tránh li bị dính vào lề */
+        }
+        .prediction-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    }
+
+    .prediction-item.top-1 {
+        background-color: #e6f7ff; /* Màu xanh dương nhạt cho top 1 */
+        border-left: 5px solid #007bff; /* Viền trái màu xanh dương đậm */
+    }
+
+    .prediction-item.top-2 {
+        background-color: #fff3e0; /* Màu cam nhạt cho top 2 */
+        border-left: 5px solid #ff9800; /* Viền trái màu cam */
+    }
+
+    .prediction-item.top-3 {
+        background-color: #e8f5e9; /* Màu xanh lá nhạt cho top 3 */
+        border-left: 5px solid #4caf50; /* Viền trái màu xanh lá */
+    }
+    /* ... (CSS hiện có của bạn) ... */
+
+.history-link-button {
+    display: inline-block; /* Hoặc block nếu muốn nó chiếm cả dòng và căn giữa dễ hơn */
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #6c757d; /* Màu xám (Bootstrap secondary color) - bạn có thể chọn màu khác */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px; /* Giống nút submit */
+    font-size: 1em;    /* Có thể nhỏ hơn nút submit một chút */
+    text-align: center;
+    transition: background-color 0.2s ease-in-out;
+    border: 1px solid transparent; /* Để có thể thêm border khi hover nếu muốn */
+}
+
+.history-link-button:hover {
+    background-color: #5a6268; /* Màu xám đậm hơn khi hover */
+    color: white;
+}
+
+/* Để căn giữa nếu là display: block */
+.center-link-button {
+    display: block;
+    width: fit-content; /* Nút chỉ rộng bằng nội dung */
+    max-width: 300px; /* Hoặc một chiều rộng cụ thể */
+    margin-left: auto;
+    margin-right: auto;
+}
