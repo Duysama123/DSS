@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnosis History - AI Health Diagnosis System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="user-nav">
+      <img src="images/home-icon.svg" alt="Home" class="icon">
+      <img src="images/user-avatar.png" alt="User Avatar" class="avatar">
+      <span>Ann</span>
+      <svg class="dropdown-arrow" viewBox="0 0 24 24">
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+      <div class="dropdown-menu">
+        <a href="settings.html">Profile</a>
+        <a href="login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Main function</h2>
+      <nav>
+        <ul>
+          <li><a href="home_loggedin.html"><img src="images/home-icon.svg" alt=""> Home</a></li>
+          <li><a href="ai_diagnosis.html"><img src="images/diagnosis-icon.svg" alt=""> AI Diagnosis</a></li>
+          <li><a href="diagnosis_history.html" class="active"><img src="images/history-icon.svg" alt=""> Diagnosis
+              History</a></li>
+          <li><a href="settings.html"><img src="images/settings-icon.svg" alt=""> Settings</a></li>
+          <li><a href="support.html"><img src="images/support-icon.svg" alt=""> Support</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1>Diagnosis History</h1>
+      <div class="history-layout">
+        <div class="history-list-container content-box">
+          <div class="search-bar-container">
+            <input type="text" placeholder="Search for symptoms, results...">
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Symptom</th>
+                <th>Diagnostic results</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows will be clickable via JS to populate details -->
+              <tr>
+                <td>2025-05-20 09:30</td>
+                <td>Cough, fever, fatigue</td>
+                <td>Flu</td>
+                <td><button class="btn btn-delete btn-sm">Delete</button></td>
+              </tr>
+              <tr>
+                <td>2025-05-15 14:00</td>
+                <td>Sore throat, mild cough</td>
+                <td>Common Cold</td>
+                <td><button class="btn btn-delete btn-sm">Delete</button></td>
+              </tr>
+              <tr>
+                <td>2025-05-10 11:15</td>
+                <td>Headache, nausea</td>
+                <td>Possible Migraine</td>
+                <td><button class="btn btn-delete btn-sm">Delete</button></td>
+              </tr>
+              <tr>
+                <td>2025-05-05 16:45</td>
+                <td>Skin rash, itching</td>
+                <td>Allergic Reaction</td>
+                <td><button class="btn btn-delete btn-sm">Delete</button></td>
+              </tr>
+              <tr>
+                <td>2025-05-01 08:00</td>
+                <td>Back pain, stiffness</td>
+                <td>Muscle Strain</td>
+                <td><button class="btn btn-delete btn-sm">Delete</button></td>
+              </tr>
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="diagnostic-details-container">
+          <h2>Diagnostic Details</h2>
+          <div class="detail-item">
+            <strong>Date:</strong>
+            <span id="detailDate">2025-05-20 09:30</span>
+          </div>
+          <div class="detail-item">
+            <strong>Symptom:</strong>
+            <span id="detailSymptom">Cough, fever, fatigue</span>
+          </div>
+          <div class="detail-item">
+            <strong>Diagnostic results:</strong>
+            <span id="detailResult">Flu</span>
+          </div>
+          <div class="detail-item">
+            <strong>Recommendation:</strong>
+            <span id="detailRecommendation">Drink plenty of water, rest. If fever is high or symptoms persist for more
+              than 3 days, go to the hospital for examination.</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>Support: 1900 XXXX | Email: hotro@chandoanai.com</p>
+    <p>© 2025 AI Health Diagnosis System. All rights reserved.</p>
+  </footer>
+
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="images/chatbot-icon.svg" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn"><img src="images/close-icon.svg" alt="Close"></button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello Ann! Viewing your diagnosis history? Let me know if you have questions.</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Enter message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

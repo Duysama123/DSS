@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - AI Health Diagnosis System{% endblock %}
+
+{% block content %}
+<h1>Settings</h1>
+<div class="content-box">
+  <form action="#" method="POST"> <!-- POST for real app -->
+    <div class="form-group">
+      <label for="fullName">Full name</label>
+      <input type="text" id="fullName" name="fullName" value="Ann">
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="text" id="age" name="age" value="18">
+    </div>
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <input type="text" id="gender" name="gender" value="Female">
+      <!-- Or use a select for gender:
+                            <select id="gender" name="gender">
+                                <option value="Female" selected>Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                            -->
+    </div>
+    <div class="form-group">
+      <label for="contactEmail">Contact email</label>
+      <input type="email" id="contactEmail" name="contactEmail" value="ann@example.com" placeholder="@gmail.com">
+    </div>
+    <div class="form-group">
+      <label for="changePassword">Change password</label>
+      <input type="password" id="changePassword" name="changePassword" placeholder="Enter new password (optional)">
+    </div>
+    <div class="form-group">
+      <label for="confirmPassword">Confirm new password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+    </div>
+    <div class="form-group toggle-switch">
+      <label for="chatbotToggle">Bật/Tắt AI Chatbot</label>
+      <label class="switch">
+        <input type="checkbox" id="chatbotToggle" checked>
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+</div>
+{% endblock %}

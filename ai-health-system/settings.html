@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - AI Health Diagnosis System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="user-nav">
+      <img src="images/home-icon.svg" alt="Home" class="icon">
+      <img src="images/user-avatar.png" alt="User Avatar" class="avatar">
+      <span>Ann</span>
+      <svg class="dropdown-arrow" viewBox="0 0 24 24">
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+      <div class="dropdown-menu">
+        <a href="settings.html">Profile</a>
+        <a href="login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Main function</h2>
+      <nav>
+        <ul>
+          <li><a href="home_loggedin.html"><img src="images/home-icon.svg" alt=""> Home</a></li>
+          <li><a href="ai_diagnosis.html"><img src="images/diagnosis-icon.svg" alt=""> AI Diagnosis</a></li>
+          <li><a href="diagnosis_history.html"><img src="images/history-icon.svg" alt=""> Diagnosis History</a></li>
+          <li><a href="settings.html" class="active"><img src="images/settings-icon.svg" alt=""> Settings</a></li>
+          <li><a href="support.html"><img src="images/support-icon.svg" alt=""> Support</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1>Settings</h1>
+      <div class="content-box">
+        <form action="#" method="POST"> <!-- POST for real app -->
+          <div class="form-group">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" name="fullName" value="Ann">
+          </div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="text" id="age" name="age" value="18">
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" name="gender" value="Female">
+            <!-- Or use a select for gender:
+                        <select id="gender" name="gender">
+                            <option value="Female" selected>Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                        -->
+          </div>
+          <div class="form-group">
+            <label for="contactEmail">Contact email</label>
+            <input type="email" id="contactEmail" name="contactEmail" value="ann@example.com" placeholder="@gmail.com">
+          </div>
+          <div class="form-group">
+            <label for="changePassword">Change password</label>
+            <input type="password" id="changePassword" name="changePassword"
+              placeholder="Enter new password (optional)">
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm new password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+          </div>
+          <div class="form-group toggle-switch">
+            <label for="chatbotToggle">Bật/Tắt AI Chatbot</label>
+            <label class="switch">
+              <input type="checkbox" id="chatbotToggle" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <!-- Using Vietnamese in footer as per settings page screenshot -->
+    <p>Hỗ trợ: 1900 XXXX | Email: hotro@chandoanai.com</p>
+    <p>© 2025 Hệ thống Chẩn đoán Sức khỏe AI. Bảo lưu mọi quyền.</p>
+  </footer>
+
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="images/chatbot-icon.svg" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn"><img src="images/close-icon.svg" alt="Close"></button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello Ann! Updating your settings?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Enter message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

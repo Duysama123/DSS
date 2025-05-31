@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - AI Health Diagnosis System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="user-nav">
+      <img src="images/home-icon.svg" alt="Home" class="icon"> <!-- Home icon next to avatar for logged in -->
+      <img src="images/user-avatar.png" alt="User Avatar" class="avatar">
+      <span>Ann</span>
+      <svg class="dropdown-arrow" viewBox="0 0 24 24">
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+      <div class="dropdown-menu">
+        <a href="settings.html">Profile</a>
+        <a href="login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Main function</h2>
+      <nav>
+        <ul>
+          <li><a href="home_loggedin.html" class="active"><img src="images/home-icon.svg" alt=""> Home</a></li>
+          <li><a href="ai_diagnosis.html"><img src="images/diagnosis-icon.svg" alt=""> AI Diagnosis</a></li>
+          <li><a href="diagnosis_history.html"><img src="images/history-icon.svg" alt=""> Diagnosis History</a></li>
+          <li><a href="settings.html"><img src="images/settings-icon.svg" alt=""> Settings</a></li>
+          <li><a href="support.html"><img src="images/support-icon.svg" alt=""> Support</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="welcome-banner">
+        <h1>Welcome back, Ann!</h1>
+        <p>Ready to check your health?</p>
+        <a href="ai_diagnosis.html" class="btn btn-secondary">Start new diagnosis</a>
+      </div>
+
+      <div class="home-grid">
+        <div class="card recent-activity">
+          <h2>Recent activity</h2>
+          <div class="activity-item">
+            <strong>Last Diagnosis</strong>
+            <span>Date: 24/05/2025</span>
+            <span>Symptoms: Headache, fatigue</span>
+            <span>Results suggest: You may need more rest.</span>
+          </div>
+          <div class="activity-item">
+            <strong>Previous Diagnosis</strong>
+            <span>Date: 05/15/2025</span>
+            <span>Symptoms: Dry cough, sore throat</span>
+            <span>Results suggest: Mild pharyngitis.</span>
+          </div>
+        </div>
+        <div class="card health-tips">
+          <h2>Health tips</h2>
+          <ul>
+            <li class="health-tip-item">Drinking enough 2 liters of water every day helps your body function better and
+              maintain healthy skin.</li>
+            <li class="health-tip-item">Get enough sleep 7-8 hours every night to restore energy and strengthen the
+              immune system.</li>
+            <li class="health-tip-item">Spend at least 30 minutes a day doing physical exercise.</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>Support: 1900 XXXX | Email: hotro@chandoanai.com</p>
+    <p>© 2025 AI Health Diagnosis System. All rights reserved.</p>
+  </footer>
+
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="images/chatbot-icon.svg" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn"><img src="images/close-icon.svg" alt="Close"></button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello Ann! I am the AI Chatbot. How can I help you today?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Enter message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

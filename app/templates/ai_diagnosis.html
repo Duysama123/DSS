@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}AI Diagnosis - AI Health Diagnosis System{% endblock %}
+
+{% block content %}
+<h1>AI Diagnosis</h1>
+<div class="content-box">
+  <h2>AI Diagnosis - Providing Information</h2>
+  <form action="{{ url_for('diagnose') }}" method="POST">
+    <!-- Phần Textarea -->
+    <div class="form-group">
+      <label for="symptom_description">Describe your symptoms in detail:</label>
+      <textarea id="symptom_description" name="symptom_description" rows="4"
+        placeholder="Example: I have been experiencing headache and fever for the past 2 days..."></textarea>
+    </div>
+    <!-- Kết thúc phần Textarea -->
+
+    <!-- Symptom Search and Checkboxes -->
+    <div class="symptom-selection-section">
+      <h3>Select symptoms:</h3>
+      <div class="form-group symptom-search-group">
+        <label for="symptom_search" class="sr-only">Search symptoms</label>
+        <input type="text" id="symptom_search" placeholder="Search symptoms...">
+        <button type="button" id="search_symptoms_btn" class="btn btn-secondary"
+          style="margin-top: 10px;">Search</button>
+      </div>
+
+      <div class="symptom-grid-container">
+        <div class="symptom-grid">
+          {% if symptoms_list %}
+          {% for symptom in symptoms_list %}
+          <div class="symptom-item">
+            <input type="checkbox" id="cb_{{ symptom }}" name="symptoms_selected" value="{{ symptom }}">
+            <label for="cb_{{ symptom }}">{{ symptom.replace('_', ' ') | title }}</label>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p>Symptom list could not be loaded. Please try again later.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <!-- End Symptom Search and Checkboxes -->
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Get Diagnosis</button>
+  </form>
+</div>
+
+<div class="info-box">
+  <h3>Important Information</h3>
+  <div class="info-box-content">
+    <p>This AI diagnosis system is designed to provide initial screening and suggestions only. It is not a
+      substitute for professional medical advice.</p>
+    <ul>
+      <li>For emergency situations, please call emergency services immediately.</li>
+      <li>Always consult with healthcare professionals for proper medical advice.</li>
+      <li>Your privacy is important - all information is kept confidential.</li>
+    </ul>
+  </div>
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+  <a href="{{ url_for('diagnosis_history') }}" class="history-link-button center-link-button">View Diagnosis History
+    (Current Session)</a>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.sidebar nav ul li a');
+
+    navLinks.forEach(link => {
+      // We are on the AI Diagnosis page, so find the link to AI Diagnosis and mark it active.
+      // We can hardcode the AI Diagnosis URL since we know we are in ai_diagnosis.html
+      const aiDiagnosisLinkPath = "{{ url_for('ai_diagnosis') }}";
+      if (link.getAttribute('href') === aiDiagnosisLinkPath) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+{% endblock %}

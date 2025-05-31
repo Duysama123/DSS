@@ -1,446 +1,1355 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+/* Poppins Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #90CAF9; /* Light blue to replace primary purple */
+    --secondary-color: #E3F2FD; /* Very light blue to replace secondary purple */
+    --accent-color: #E91E63; /* Pink for buttons/warnings */
+    --text-color: #333;
+    --text-light: #555;
+    --border-color: #BDBDBD;
+    --white: #FFFFFF;
+    --blue: #1976D2; /* Darker blue for specific elements */
+    --yellow-warn: #FFF9C4; /* Light yellow for informational messages */
+    --red-warn: #FFEBEE; /* Light red for warnings */
+}
+
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f7f6;
-    color: #333;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFF8E1; /* Creamy background for the whole page */
+    color: var(--text-color);
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
-    align-items: center;
     min-height: 100vh;
 }
 
-.container {
-    width: 90%;
-    max-width: 800px; /* Giới hạn chiều rộng tối đa */
-    margin: 20px auto;
-    padding: 25px;
-    background-color: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+header {
+    background-color: var(--white);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-h1 {
-    color: #2c3e50;
-    text-align: center;
+.user-nav {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-nav img.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.user-nav img.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.user-nav span {
+    font-weight: 500;
+}
+
+.user-nav .dropdown-arrow {
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
+    fill: var(--text-color);
+}
+
+/* Basic dropdown (JS needed for toggle) */
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    min-width: 120px;
+    z-index: 1001;
+}
+.dropdown-menu a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9em;
+}
+.dropdown-menu a:hover {
+    background-color: var(--secondary-color);
+}
+.user-nav:hover .dropdown-menu { /* Simple hover for demo, JS better */
+    /* display: block; */ /* Enable this for hover, or use JS */
+}
+
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    padding-top: 20px;
+    position: relative;
+}
+
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: var(--white);
+    padding: 20px;
+    height: calc(100vh - 70px - 60px);
+    position: fixed;
+    top: 70px;
+    left: 0;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.sidebar h2 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: var(--text-light);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar nav ul li a img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    filter: grayscale(50%) opacity(0.7); /* Adjust icon color */
+}
+
+.sidebar nav ul li a:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color-dark); /* A darker shade of purple */
+}
+
+.sidebar nav ul li a.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.sidebar nav ul li a.active img {
+    filter: brightness(0) invert(1);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px 30px;
+    background-color: var(--secondary-color);
+    margin-left: 250px;
+    min-height: calc(100vh - 70px - 60px);
+}
+
+.content-box {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     margin-bottom: 20px;
 }
-
-p.instructions {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #555;
+.content-box h1, .main-content > h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 600;
 }
 
-/* Styling cho NLP Input Area */
-.nlp-input-area {
-    margin-bottom: 30px;
+.main-content h2 { /* For sub-headings within content */
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.main-content p, .main-content li {
+    margin-bottom: 10px;
+    color: var(--text-light);
+}
+.main-content ul {
+    padding-left: 20px;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95em;
+}
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #aaa;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s;
+}
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+.btn-primary:hover {
+    background-color: #c2185b; /* Darker pink */
+}
+.btn-secondary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.btn-secondary:hover {
+    background-color: #b39ddb; /* Darker light purple */
+}
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+.btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+
+/* Alert/Info Boxes */
+.info-box {
     padding: 15px;
+    border-radius: 4px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    border-left-width: 5px;
+    border-left-style: solid;
+}
+.info-box h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: var(--text-color);
+}
+.info-box p, .info-box ul {
+    margin-bottom: 10px;
+    color: var(--text-light);
+}
+.info-box ul {
+    padding-left: 20px;
+}
+.info-box li {
+    margin-bottom: 5px;
+}
+
+.info-box.warning {
+    background-color: var(--red-warn);
+    border-left-color: #d32f2f; /* Darker red */
+    color: #b71c1c;
+}
+.info-box.important {
+    background-color: #E3F2FD; /* Light blue background */
+    border-left-color: #1976D2; /* Darker blue border */
+    color: var(--text-color);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    text-align: left;
+    font-size: 0.9em;
+}
+th {
+    background-color: var(--secondary-color);
+    font-weight: 600;
+}
+tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.nlp-input-area label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-    color: #34495e;
+footer {
+    background-color: #f0f0f0;
+    color: var(--text-light);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    margin-top: auto;
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+footer p {
+    margin-bottom: 5px;
 }
 
-textarea[name="symptom_description"] {
-    width: calc(100% - 22px); /* Trừ padding và border */
+/* Chatbot */
+.chatbot-icon-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block; /* Ensure it's always visible when enabled */
+}
+
+.chatbot-icon-container.hidden {
+    display: none;
+}
+
+.chatbot-icon-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--blue);
+    padding: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    pointer-events: none; /* Ensure clicks go to container */
+}
+
+.chatbot-window {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    width: 350px;
+    height: 450px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.chatbot-window.open {
+    display: flex;
+}
+
+.chatbot-header {
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chatbot-header h3 {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+.chatbot-close-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.chatbot-close-btn img {
+    width: 18px;
+    height: 18px;
+    filter: invert(1);
+}
+
+.chatbot-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--secondary-color);
+}
+.chat-message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+.chat-message.user {
+    background-color: var(--primary-color);
+    color: var(--white);
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+.chat-message.bot {
+    background-color: #e0e0e0;
+    color: var(--text-color);
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+}
+
+.chatbot-input {
+    display: flex;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    min-height: 100px;
-    resize: vertical; /* Cho phép thay đổi chiều cao */
+    border-top: 1px solid var(--border-color);
+}
+.chatbot-input input {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 0.9em;
+}
+.chatbot-input button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.chatbot-input button:hover {
+    background-color: #1565C0; /* Darker blue */
+}
+
+/* Specific page styles */
+
+/* Login Page */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px - 60px);
+    padding: 20px;
+    background-color: var(--secondary-color);
+}
+.login-page-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
+    color: var(--blue);
+    font-weight: 600;
+}
+.login-page-subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-light);
+}
+.login-page-warning {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.login-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 800px; /* Max width for the two boxes */
+}
+
+.login-box {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    flex: 1; /* Equal width for both boxes */
+    border-top: 5px solid var(--primary-color);
+}
+.login-box h2 {
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 1.5em;
+}
+.login-box .user-icon {
+    width: 60px;
+    height: 60px;
+    margin: 15px auto;
+    fill: var(--primary-color); /* For SVGs */
+    color: var(--primary-color); /* For font icons */
+}
+.login-box p {
+    font-size: 0.9em;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+.login-box .btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Home Logged In */
+.welcome-banner {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.welcome-banner h1 {
+    margin-bottom: 5px;
+}
+.welcome-banner p {
+    color: var(--text-light);
     margin-bottom: 15px;
 }
 
-/* Styling cho Symptom Checkbox Grid (nếu bạn vẫn giữ) */
+.home-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Recent activity wider */
+    gap: 20px;
+}
+.card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.card h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+    padding-bottom: 10px;
+}
+.activity-item, .health-tip-item {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+.activity-item:last-child, .health-tip-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.activity-item strong {
+    display: block;
+    color: var(--text-color);
+}
+
+/* Diagnosis History */
+.history-layout {
+    display: flex;
+    gap: 20px;
+}
+.history-list-container {
+    flex: 2; /* Takes more space */
+}
+.diagnostic-details-container {
+    flex: 1;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    height: fit-content; /* So it doesn't stretch unnecessarily */
+}
+.diagnostic-details-container h2 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+.detail-item {
+    margin-bottom: 12px;
+}
+.detail-item strong {
+    display: block;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 3px;
+}
+.detail-item span {
+    color: var(--text-light);
+}
+.search-bar-container {
+    margin-bottom: 20px;
+}
+.search-bar-container input[type="text"] {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px; /* Rounded search bar */
+    width: 100%;
+}
+.login-box .user-icon {
+  width: 60px;  /* Or your desired size */
+  height: 60px; /* Or your desired size */
+  margin: 15px auto;
+  fill: var(--primary-color); /* This will work if your SVG has fill="currentColor" */
+  /* If the SVG has a hardcoded fill, you might need to edit the SVG or use CSS filter for color */
+}
+/* Toggle Switch Styles */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Login page specific styles - override the fixed sidebar layout */
+body.login-page .sidebar {
+    display: none; /* Hide sidebar on login page */
+}
+
+body.login-page .main-content {
+    margin-left: 0; /* Remove margin on login page */
+    padding: 0; /* Remove padding from main-content on login page */
+    background-color: transparent; /* Make background transparent to use body background */
+}
+
+body.login-page .container {
+    padding-top: 0;
+    display: block; /* Change to block layout for login page */
+}
+
+body.login-page footer {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* Styles for the new login page layout */
+.login-header-section {
+    display: flex; /* Use flexbox to arrange children side-by-side */
+    align-items: center; /* Vertically center align items */
+    justify-content: center; /* Horizontally center the content block */
+    padding: 40px 20px; /* Adjust padding */
+    background-color: #BBDEFB; /* Light blue background */
+    position: relative; /* Keep relative if needed for any future positioning */
+    overflow: hidden;
+    /* Increase padding bottom to make space for larger image height */
+    padding-bottom: 150px; /* Adjust this value based on desired overlap */
+}
+
+.doctor-illustration {
+    width: auto; /* Allow width to adjust based on height */
+    height: 350px; /* Increase height as needed */
+    margin-right: 30px; /* Space between image and text */
+    position: static; /* Ensure static positioning */
+    bottom: auto;
+    left: auto;
+    transform: none;
+    z-index: auto;
+    pointer-events: auto;
+}
+
+.login-title-container {
+    text-align: left;
+    max-width: 400px;
+    z-index: auto;
+    position: static;
+}
+
+.login-page-title {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.login-page-subtitle {
+    font-size: 1.2em;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: transparent;
+    margin-left: 0;
+    min-height: auto;
+    /* Pull container up more to overlap with the bottom of the image */
+    margin-top: -180px; /* Adjusted negative value for more overlap */
+    position: relative;
+    z-index: 2; /* Ensure login boxes are above header/image */
+}
+
+.login-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 800px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.login-box {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    flex: 1;
+    border-top: 5px solid var(--primary-color);
+}
+
+/* Ensure chatbot and footer are positioned correctly on login page */
+body.login-page .chatbot-icon-container {
+    /* Adjust if needed, might be fine with fixed positioning */
+}
+
+body.login-page .chatbot-window {
+     /* Adjust if needed, might be fine with fixed positioning */
+}
+
+/* Styles for Symptom Checkbox Grid */
 .symptom-grid-container {
     margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px dashed #eee;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--secondary-color); /* Light background */
 }
 
 .symptom-grid-container h3 {
-    margin-bottom: 10px;
-    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 15px;
     font-size: 1.1em;
+    color: var(--text-color);
 }
 
 .symptom-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Tăng minmax một chút */
-    gap: 12px;
-    margin-bottom: 25px;
-    max-height: 300px; /* Giới hạn chiều cao và cho phép scroll */
-    overflow-y: auto; /* Thêm thanh cuộn dọc nếu cần */
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    background-color: #fdfdfd;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive columns */
+    gap: 10px; /* Space between items */
+    max-height: 200px; /* Limit height */
+    overflow-y: auto; /* Add vertical scroll */
+    padding-right: 10px; /* Space for scrollbar */
 }
 
 .symptom-item {
-    display: flex;
+    display: flex; /* Align checkbox and label */
     align-items: center;
-    padding: 8px;
-    background-color: #fff;
-    border: 1px solid #eee;
+    background-color: var(--white);
+    padding: 8px 12px;
     border-radius: 4px;
-    transition: background-color 0.2s ease-in-out;
+    border: 1px solid #eee;
+    transition: background-color 0.2s;
 }
 
 .symptom-item:hover {
-    background-color: #f0f8ff; /* AliceBlue */
+    background-color: #f0f0f0;
 }
 
 .symptom-item input[type="checkbox"] {
     margin-right: 8px;
-    transform: scale(1.1); /* Làm checkbox to hơn một chút */
+    cursor: pointer;
 }
 
 .symptom-item label {
-    margin-left: 0; /* Bỏ margin cũ */
-    color: #333;
+    flex-grow: 1; /* Label takes available space */
     cursor: pointer;
-    flex-grow: 1; /* Cho label chiếm hết không gian còn lại */
+    font-size: 0.95em;
+    color: var(--text-light);
 }
 
-/* Styling cho Button */
-button[type="submit"] {
-    display: block;
-    width: 100%; /* Nút chiếm toàn bộ chiều rộng */
-    max-width: 250px; /* Giới hạn chiều rộng tối đa của nút */
-    margin: 20px auto 0 auto; /* Căn giữa nút */
-    padding: 12px 20px;
-    background-color: #3498db; /* Màu xanh dương đẹp hơn */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+/* Specific Important Info Box Styling */
+.info-box-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Two columns, adjusts on smaller screens */
+    gap: 20px; /* Space between columns */
+    flex-grow: 1; /* Take up available space in the flex container */
+    margin-left: 15px; /* Space between heading and content */
 }
 
-button[type="submit"]:hover {
-    background-color: #2980b9;
+.info-box-content ul {
+    margin-bottom: 0; /* Remove bottom margin from the list */
 }
 
-/* Responsive adjustments (ví dụ) */
-@media (max-width: 600px) {
-    .symptom-grid {
-        grid-template-columns: 1fr; /* Một cột trên màn hình nhỏ */
-    }
-    .container {
-        width: 95%;
-        padding: 15px;
-    }
-}
-/* CSS cho Autocomplete (có thể đặt trong style.css) */
-    .autocomplete-items {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        /*top: 100%;*/ /* Vị trí tương đối với input, cần điều chỉnh */
-        left: 0;
-        right: 0;
-        max-height: 200px;
-        overflow-y: auto;
-        background-color: white;
-    }
-    .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: #fff; 
-        border-bottom: 1px solid #d4d4d4; 
-    }
-    .autocomplete-items div:hover {
-        background-color: #e9e9e9; 
-    }
-    .autocomplete-active { /* Khi dùng phím mũi tên để chọn */
-        background-color: DodgerBlue !important; 
-        color: #ffffff; 
-    }
-    #selected-symptoms-display .symptom-tag {
-        display: inline-block;
-        background-color: #e0e0e0;
-        padding: 3px 8px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        border-radius: 3px;
-        font-size: 0.9em;
-    }
-    #selected-symptoms-display .symptom-tag .remove-symptom {
-        margin-left: 5px;
-        color: red;
-        cursor: pointer;
-        font-weight: bold;
-    }
-/* CSS cho các tag triệu chứng đã chọn */
-    #selected-symptoms-list-container .symptom-tag {
-        display: inline-block;
-        background-color: #007bff; /* Màu xanh dương hơn */
-        color: white;
-        padding: 5px 10px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        border-radius: 15px; /* Bo tròn hơn */
-        font-size: 0.9em;
-        line-height: 1.5;
-    }
-    #selected-symptoms-list-container .symptom-tag .remove-symptom {
-        margin-left: 8px;
-        color: #ffdddd; /* Màu đỏ nhạt hơn trên nền xanh */
-        cursor: pointer;
-        font-weight: bold;
-    }
-     #selected-symptoms-list-container .symptom-tag .remove-symptom:hover {
-        color: white;
-    }
-    #selected-symptoms-list-container:empty::after { /* Hiển thị "None" nếu không có tag nào */
-        content: "None";
-        font-style: italic;
-        color: #6c757d;
-    }
-.result-section {
-            background-color: #fdfdfd;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .result-section h3 {
-            margin-top: 0;
-            color: #34495e;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .result-section h4 { /* Thêm style cho h4 nếu cần */
-            color: #2c3e50;
-            margin-top: 10px;
-            margin-bottom: 5px;
-        }
-        .user-input-display {
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-style: italic;
-            color: #495057;
-        }
-        .symptom-list-results li {
-            background-color: #eaf6ff;
-            padding: 5px 8px;
-            margin-bottom: 5px;
-            border-radius: 3px;
-            border: 1px solid #cce4ff;
-        }
-        .info-message {
-            color: #555;
-            font-style: italic;
-        }
-        .error-message { /* Dùng cho các lỗi chung */
-            color: #721c24;
-            background-color: #f8d7da;
-            border-color: #f5c6cb;
-            padding: .75rem 1.25rem;
-            margin-bottom: 1rem;
-            border: 1px solid transparent;
-            border-radius: .25rem;
-        }
-        .emergency-advice { /* Style riêng cho cảnh báo khẩn cấp */
-            color: #D8000C; /* Màu đỏ đậm */
-            background-color: #FFD2D2; /* Màu nền đỏ nhạt */
-            border: 1px solid #D8000C;
-            border-left-width: 5px;
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        .emergency-advice h4 {
-             color: #D8000C !important; /* Đảm bảo màu chữ cho h4 trong emergency */
-             margin-top:0;
-        }
-
-        .severity-high { color: #D8000C; font-weight: bold; } /* Đỏ cho mức độ cao/khẩn */
-        .severity-medium { color: #FFA500; font-weight: bold; } /* Cam cho mức độ trung bình */
-        .severity-low { color: #008000; font-weight: bold;} /* Xanh lá cho mức độ thấp */
-
-
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 18px;
-            background-color: #555;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.2s ease;
-        }
-        .back-link:hover {
-            background-color: #333;
-        }
-        /* ... (CSS hiện có của bạn) ... */
-
-        .card { /* Áp dụng cho các .result-section */
-            background-color: #ffffff; /* Nền trắng hơn cho card */
-            border: 1px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
-            border-radius: 8px; /* Bo góc lớn hơn */
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .card h3 {
-            color: #2c3e50; /* Màu đậm hơn cho tiêu đề card */
-            font-size: 1.4em;
-            border-bottom: 2px solid #ecf0f1; /* Đường kẻ rõ ràng hơn */
-        }
-
-        .symptom-tag {
-            display: inline-block;
-            background-color: #e0eaf1; /* Màu nền cho tag */
-            color: #34495e;
-            padding: 5px 10px;
-            margin: 3px;
-            border-radius: 15px; /* Bo tròn thành pill */
-            font-size: 0.9em;
-        }
-
-        .severity-icon {
-            margin-right: 5px;
-            font-size: 1.1em; /* Kích thước biểu tượng */
-        }
-
-        /* Ví dụ cho Accordion (cần JavaScript để hoạt động) */
-        .accordion-header {
-            cursor: pointer;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            margin-top: 10px;
-            border-radius: 4px;
-        }
-        .accordion-header:hover {
-            background-color: #f1f1f1;
-        }
-        .accordion-content {
-            padding: 0 15px;
-            display: none; /* Ẩn mặc định */
-            overflow: hidden;
-            background-color: white;
-            border: 1px solid #eee;
-            border-top: none;
-        }
-
-        /* Thêm line-height cho các đoạn văn bản dài */
-       /* Áp dụng căn đều cho các đoạn văn bản trong phần kết quả */
-        .result-section p, 
-        .result-section li { /* Áp dụng luôn cho các mục danh sách nếu muốn */
-            line-height: 1.6; /* Giữ lại hoặc điều chỉnh line-height */
-            text-align: justify;
-            -webkit-hyphens: auto; /* Tùy chọn: Thêm gạch nối tự động cho Webkit (Chrome, Safari) */
-            -moz-hyphens: auto;    /* Tùy chọn: Thêm gạch nối tự động cho Firefox */
-            -ms-hyphens: auto;     /* Tùy chọn: Thêm gạch nối tự động cho IE/Edge */
-            hyphens: auto;         /* Tùy chọn: Thêm gạch nối tự động chuẩn */
-        }
-        .prediction-item {
-            background-color: #f0f8ff; /* Màu nền nhạt cho dự đoán */
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            border: 1px solid #d0e7ff; /* Viền nhẹ */
-        }
-        .rule-item {
-            background-color: #fff3e0; /* Màu nền nhạt cho kết luận */
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            border: 1px solid #ffe0b2; /* Viền nhẹ */
-        }
-        /* Bạn có thể muốn cụ thể hơn, ví dụ chỉ cho phần guidance */
-        .guidance-text p,
-        .guidance-text li {
-            text-align: justify;
-            hyphens: auto; /* Tùy chọn */
-        }
-
-        /* Hoặc cho phần tóm tắt Wikipedia */
-        .wikipedia-summary p {
-            text-align: justify;
-            hyphens: auto; /* Tùy chọn */
-        }
-                .symptom-tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px; /* Khoảng cách giữa các tag */
-        }
-        .justified-text, 
-        .justified-text li { /* Nếu bạn thêm class vào ul, thì li bên trong cũng cần */
-            text-align: justify;
-            hyphens: auto; /* Tùy chọn */
-            line-height: 1.6;
-        }
-                .justified-text ul {
-            padding-left: 20px; /* Để tránh li bị dính vào lề */
-        }
-        .prediction-item {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #eee;
-    }
-
-    .prediction-item.top-1 {
-        background-color: #e6f7ff; /* Màu xanh dương nhạt cho top 1 */
-        border-left: 5px solid #007bff; /* Viền trái màu xanh dương đậm */
-    }
-
-    .prediction-item.top-2 {
-        background-color: #fff3e0; /* Màu cam nhạt cho top 2 */
-        border-left: 5px solid #ff9800; /* Viền trái màu cam */
-    }
-
-    .prediction-item.top-3 {
-        background-color: #e8f5e9; /* Màu xanh lá nhạt cho top 3 */
-        border-left: 5px solid #4caf50; /* Viền trái màu xanh lá */
-    }
-    /* ... (CSS hiện có của bạn) ... */
-
-.history-link-button {
-    display: inline-block; /* Hoặc block nếu muốn nó chiếm cả dòng và căn giữa dễ hơn */
+/* Results Horizontal Layout */
+.results-horizontal-layout {
+    display: grid;
+    /* Define column widths based on the image: */
+    /* Column 1 (Input/Processed): narrower */
+    /* Column 2 (Suggestions): narrower */
+    /* Column 3 (Guidance): wider */
+    /* Column 4 (Wiki/Disclaimer): wider */
+    grid-template-columns: 1.5fr 1.8fr 2.5fr 2fr; /* Adjusted column widths */
+    gap: 20px; /* Space between columns */
     margin-top: 20px;
-    padding: 10px 18px;
-    background-color: #6c757d; /* Màu xám (Bootstrap secondary color) - bạn có thể chọn màu khác */
-    color: white;
+    /* Adjust padding/margins if needed to align with sidebar */
+    /* For example, if the main-content still has left margin from sidebar: */
+     /* margin-left: 0; */
+     /* padding: 0 20px; */
+}
+
+.results-col {
+    /* Add any specific column styling if needed */
+}
+
+/* Adjusting result-section within the new layout */
+.results-horizontal-layout .result-section {
+    margin-bottom: 20px; /* Keep vertical spacing between sections within a column */
+}
+
+/* Adjust the back link to be outside the columns but within the main area */
+/* If the back link is now inside results-col-4, this might need adjustment */
+.main-content .back-link {
+    /* display: block; */ /* Make it a block element */
+    /* text-align: center; */ /* Center the link */
+    /* margin-top: 30px; */ /* Add space above */
+    /* If it's inside a column, let's style it differently */
+    display: inline-block;
+    margin-top: 15px;
+}
+
+/* --- Styles for the Diagnosis Results Page Layout --- */
+
+/* Adjust the main .container for the results page if it's the root of results.html */
+/* This assumes .container is directly under <body> or .main-content */
+/* If your .container class is generic, you might need a more specific selector for the results page */
+div.container { /* Or e.g., body.results-page .container */
+    display: flex;
+    flex-direction: column; /* Stack H1, results grid, and back-link vertically */
+    align-items: stretch;   /* Allow .results-horizontal-layout to take full width */
+    /* padding: 20px; /* Or rely on .main-content padding */
+}
+
+/* Title for the results page (H1 tag) */
+div.container > h1 {
+    text-align: center; /* Or 'left' if you prefer */
+    margin-bottom: 25px; /* Space below the title */
+    font-size: 1.8em;    /* Consistent with other main titles */
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* This is the main grid container for the columns */
+.results-horizontal-layout {
+    display: grid;
+    /* Column widths from your CSS, adjust as needed based on content */
+    grid-template-columns: 1.5fr 1.8fr 2.5fr 2fr;
+    gap: 20px; /* Space between columns */
+    width: 100%; /* Take full available width */
+    /* margin-top: 20px; /* Original value, can be adjusted or removed if H1 margin is enough */
+}
+
+/* This is each column within the grid */
+.results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* This creates vertical space between .result-section cards within THIS column */
+}
+
+/* Styling for individual result sections */
+.result-section {
+    /* .card class already provides background, padding, border-radius, shadow */
+    margin-bottom: 0; /* Crucial: Remove bottom margin if .results-col 'gap' is used for spacing */
+    width: 100%;      /* Ensure section takes full width of its column cell */
+}
+/* If .result-section had a general margin-bottom: 20px; from your original CSS for the horizontal layout,
+   the 'gap' on .results-col is a cleaner way to handle spacing within columns.
+   If you see double spacing, ensure any direct margin-bottom on .result-section is removed or set to 0. */
+
+/* The .card class styles (already in your CSS) should apply well here. */
+/* No changes needed for .card if it's already defined as in your provided CSS. */
+
+/* Specific styling for the disclaimer if it uses inline styles */
+.results-col .result-section[style*="background-color: #f0f0f0"] {
+    /* Inline styles provide background, text-align, padding.
+       border-radius: 8px; is already in your inline style, which is good. */
+    /* It will naturally fit into the column structure. */
+}
+
+/* Back link at the bottom of the results page */
+.container .back-link { /* More specific selector if needed */
+    display: block; /* To allow margin auto for centering */
+    width: fit-content; /* Shrink to content size */
+    margin: 30px auto 20px auto; /* Top margin, auto L/R for centering, bottom margin */
+    padding: 10px 20px;
+    background-color: var(--accent-color); /* Use your theme's accent color */
+    color: var(--white);
     text-decoration: none;
-    border-radius: 5px; /* Giống nút submit */
-    font-size: 1em;    /* Có thể nhỏ hơn nút submit một chút */
+    border-radius: 4px;
     text-align: center;
-    transition: background-color 0.2s ease-in-out;
-    border: 1px solid transparent; /* Để có thể thêm border khi hover nếu muốn */
+    font-weight: 500; /* Consistent with .btn styling */
+    transition: background-color 0.3s; /* Smooth hover effect */
 }
 
-.history-link-button:hover {
-    background-color: #5a6268; /* Màu xám đậm hơn khi hover */
-    color: white;
+.container .back-link:hover {
+    background-color: #c2185b; /* Darker shade of accent color on hover */
 }
 
-/* Để căn giữa nếu là display: block */
-.center-link-button {
+/* === ENHANCED STYLES FOR DIAGNOSIS RESULTS PAGE === */
+
+/* --- Overall Page and Container --- */
+/* Assuming .main-content is the container for the results page */
+.main-content {
+    background-color: #f4f6f8; /* Very light grey background for the content area */
+    padding: 20px 30px 30px 30px; /* Top, R, B, L padding */
+}
+
+/* Main title of the results page (if you add one like "Diagnosis Results") */
+div.container > h1 {
+    font-size: 1.8em; /* User image doesn't show H1, but good to style */
+    font-weight: 600;
+    color: #2c3e50;   /* Dark, muted blue/grey */
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+/* --- Results Grid Layout --- */
+.results-horizontal-layout {
+    display: grid;
+    /* Adjusted column widths to better match the screenshot's content distribution */
+    grid-template-columns: 1.6fr 1.6fr 2.8fr 2fr;
+    gap: 25px; /* Space between columns */
+    width: 100%;
+}
+
+.results-col {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Vertical space between cards in a column */
+}
+
+/* --- Card Styling (.result-section.card) --- */
+.result-section.card {
+    background-color: var(--white);
+    border-radius: 6px; /* Slightly less rounded */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07); /* Softer, more subtle shadow */
+    padding: 20px;
+    border: 1px solid #e9ecef; /* Very light border for definition */
+}
+
+/* --- Typography and Content within Cards --- */
+.result-section h3 { /* Main title for each card section */
+    font-size: 1.15em; /* Adjusted size for a cleaner look */
+    font-weight: 600;
+    color: #343a40; /* Darker grey, less blue */
+    margin-top: 0;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef; /* Lighter separator line */
+}
+
+.result-section h4 { /* Sub-headings within cards, e.g., "When to See a Doctor" */
+    font-size: 1em;
+    font-weight: 600;
+    color: #495057; /* Medium grey */
+    margin-top: 15px;
+    margin-bottom: 8px;
+}
+
+.result-section p,
+.result-section .user-input-display,
+.result-section .info-message,
+.result-section .wikipedia-summary,
+.result-section li { /* Apply base paragraph/list item styling */
+    font-size: 0.92em; /* Standard text size */
+    line-height: 1.65; /* Improved readability */
+    color: #495057; /* Medium grey for body text */
+    margin-bottom: 10px;
+}
+
+.result-section .user-input-display { /* For "Symptoms were selected via checkboxes." */
+    font-style: italic;
+    background-color: #f8f9fa; /* Very light off-white */
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #555;
+    /* border-left: 3px solid #6c757d; */ /* Optional subtle left border */
+}
+
+.result-section ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.result-section ul li {
+    padding: 6px 0px 6px 18px; /* Top/Bottom, Right, Left for custom bullet */
+    position: relative;
+    border-bottom: 1px dotted #eeeeee; /* Very subtle separator for list items */
+}
+.result-section ul li:last-child {
+    border-bottom: none;
+}
+
+.result-section ul li::before { /* Default bullet for lists */
+    content: "–"; /* en-dash as a subtle bullet */
+    color: #007bff; /* Using a standard blue for accents */
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 6px; /* Adjust vertical alignment */
+    font-size: 1em;
+}
+
+/* Specific for Self-Care Tips list */
+.guidance-text ul li::before {
+    content: "✓";
+    color: #28a745; /* Standard green for positive/ actionable items */
+    font-size: 0.9em;
+    top: 7px;
+}
+
+
+/* --- Specific Sections Styling --- */
+
+/* Symptoms Processed by System */
+.symptom-tags-container { /* If you have multiple symptoms shown as tags */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.symptom-tag,
+p.info-message + .symptom-tags-container + p { /* For single symptom display like "Abdominal Distention" */
+    background-color: #e2e6ea;
+    color: #495057;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: 500;
+    display: inline-block; /* Make it not full width if it's a single p */
+}
+/* If "Abdominal Distention" is just a p tag without span.symptom-tag */
+.result-section:has(h3:contains("Symptoms Processed")) p {
+    font-weight: 500;
+    color: #343a40;
+}
+
+
+/* Diagnostic Suggestions */
+.result-item {
+    padding: 8px 0;
+    border-bottom: 1px dotted #f1f1f1;
+}
+.result-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.result-item strong { /* Labels like "AI Model Suggestion:", "Probability:" */
+    color: #343a40;
+    font-weight: 500;
+    display: inline-block;
+    min-width: 90px; /* Align values slightly */
+}
+.result-item span, /* The actual suggestion/probability value */
+.result-item br + strong + span { /* If the structure is Suggestion <br> Probability */
+    color: #5f676d;
+}
+
+
+/* Guidance Section */
+.guidance-text p strong, /* For labels above paragraph text like "Severity Level:" */
+.guidance-text h4 { /* For "When to See a Doctor", "Self-Care Tips" */
     display: block;
-    width: fit-content; /* Nút chỉ rộng bằng nội dung */
-    max-width: 300px; /* Hoặc một chiều rộng cụ thể */
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 4px;
+    color: #343a40;
+    font-weight: 600;
 }
+
+.severity-icon {
+    margin-right: 6px;
+    font-size: 1.05em;
+}
+/* Style for the paragraph containing severity info */
+.guidance-text p:has(> .severity-icon) {
+    background-color: #f8f9fa;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+.guidance-text p:has(> .severity-high) { border-left: 3px solid #dc3545; }
+.guidance-text p:has(> .severity-medium) { border-left: 3px solid #ffc107; }
+.guidance-text p:has(> .severity-low) { border-left: 3px solid #28a745; }
+
+.severity-high { color: #dc3545; } /* Bootstrap danger red */
+.severity-medium { color: #ffc107; } /* Bootstrap warning yellow */
+.severity-low { color: #28a745; } /* Bootstrap success green */
+
+
+/* Wikipedia Section */
+.justified-text h4 a { /* Title of Wikipedia article */
+    color: #007bff; /* Standard blue link */
+    text-decoration: none;
+    font-weight: 600;
+}
+.justified-text h4 a:hover {
+    text-decoration: underline;
+}
+.justified-text p a[href*="wikipedia.org"] { /* "Read more on Wikipedia..." link */
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.justified-text p a[href*="wikipedia.org"]:hover {
+    text-decoration: underline;
+}
+
+/* Disclaimer Section - assuming it's a .result-section.card */
+.result-section.card:has(strong:contains("Important Disclaimer")) {
+    background-color: #f8f9fa; /* Slightly different background for disclaimer card */
+    border-left: 4px solid #6c757d; /* Grey left border */
+}
+.result-section.card:has(strong:contains("Important Disclaimer")) h3 {
+    /* If disclaimer has an H3, remove it or style it differently */
+    /* display: none; */ /* Or make it less prominent */
+}
+.result-section.card:has(strong:contains("Important Disclaimer")) p {
+    font-size: 0.85em;
+    color: #495057;
+    margin: 0;
+    text-align: left; /* Ensure left alignment as per image */
+}
+.result-section.card:has(strong:contains("Important Disclaimer")) p strong { /* For "Important Disclaimer:", "not a substitute..." */
+    color: #dc3545; /* Strong red for emphasis */
+    font-weight: 600;
+}
+
+
+/* --- Back Link --- */
+.container .back-link {
+    display: block;
+    width: fit-content;
+    margin: 35px auto 20px auto; /* Centered with top/bottom margin */
+    padding: 10px 22px;
+    background-color: #007bff; /* Standard blue for primary actions */
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease-out, box-shadow 0.2s ease-out;
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+.container .back-link:hover,
+.container .back-link:focus {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+    outline: none;
+}
+
+/* === END ENHANCED STYLES === */
+
+/* === Diagnostic Suggestions Grid & Cards === */
+.diagnostic-suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Luôn 2 cột */
+    gap: 20px; /* Khoảng cách giữa các thẻ */
+    margin-top: 15px;
+}
+
+.suggestion-card {
+    background-color: var(--white);
+    border: 1px solid #e9ecef; /* var(--border-color) */
+    border-radius: 8px; /* var(--border-radius) */
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* var(--card-shadow) */
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.25s ease-in-out, transform 0.25s ease-in-out;
+    min-height: 130px; /* Chiều cao tối thiểu để các card đều nhau hơn */
+}
+
+.suggestion-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+.suggestion-card-header {
+    margin-bottom: 12px;
+}
+
+.suggestion-name {
+    font-size: 1.0em; /* Kích thước font cho tên bệnh */
+    font-weight: 600;
+    color: #2c3e50; /* var(--text-color-dark) */
+    line-height: 1.4;
+}
+.suggestion-name strong { /* "AI Model Suggestion:" part */
+    display: block;
+    font-size: 0.8em;
+    font-weight: 500;
+    color: #6c757d; /* var(--text-light) */
+    margin-bottom: 2px;
+}
+
+
+.suggestion-card-body {
+    flex-grow: 1; /* Để body chiếm không gian còn lại */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Đẩy probability xuống dưới nếu card cao hơn */
+}
+
+.probability-info, .confidence-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.probability-label, .confidence-label {
+    color: #495057; /* var(--text-medium) */
+    font-weight: 500;
+}
+
+.probability-value, .confidence-value {
+    font-weight: 700;
+    color: #007bff; /* var(--blue) - màu chính cho giá trị */
+    font-size: 1.1em;
+}
+.confidence-value {
+    color: #28a745; /* Green for confidence */
+}
+
+
+.probability-bar-container {
+    width: 100%;
+    height: 8px; /* Chiều cao thanh progress */
+    background-color: #e0e7ef; /* Màu nền của thanh */
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: auto; /* Đẩy thanh xuống cuối card-body */
+}
+
+.probability-bar {
+    height: 100%;
+    background-color: #007bff; /* var(--blue) - Màu của thanh progress */
+    border-radius: 4px;
+    transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1); /* Hiệu ứng chuyển động mượt mà */
+    text-indent: -9999px; /* Ẩn text bên trong nếu có */
+}
+
+/* Thay đổi màu thanh dựa trên % (Tùy chọn, cần class động từ backend nếu muốn nhiều mức) */
+.probability-bar[style*="width: 75"],
+.probability-bar[style*="width: 76"], /* ... đến 100% */
+.probability-bar[style*="width: 100%"] {
+    /* background-color: #dc3545; */ /* Màu đỏ cho xác suất cao, nếu muốn */
+}
+.probability-bar[style*="width: 25"],
+.probability-bar[style*="width: 26"], /* ... đến 50% */
+.probability-bar[style*="width: 50%"] {
+    /* background-color: #ffc107; */ /* Màu vàng cho xác suất trung bình, nếu muốn */
+}
+
+
+.suggestion-card-footer.rule-reasoning {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed #e0e0e0;
+    font-size: 0.8em;
+    color: #6c757d; /* var(--text-light) */
+}
+.suggestion-card-footer.rule-reasoning strong {
+    color: #495057; /* var(--text-medium) */
+    display: block;
+    margin-bottom: 4px;
+}
+.suggestion-card-footer.rule-reasoning p {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+/* Ẩn kiểu danh sách cũ nếu cần */
+.result-section > .result-item {
+    display: none;
+}
+
+/* === END ENHANCED STYLES FOR DIAGNOSIS RESULTS PAGE === */
