@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support - AI Health Diagnosis System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <div class="user-nav">
+      <img src="images/home-icon.svg" alt="Home" class="icon">
+      <img src="images/user-avatar.png" alt="User Avatar" class="avatar">
+      <span>Ann</span>
+      <svg class="dropdown-arrow" viewBox="0 0 24 24">
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+      <div class="dropdown-menu">
+        <a href="settings.html">Profile</a>
+        <a href="login.html">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Main function</h2>
+      <nav>
+        <ul>
+          <li><a href="home_loggedin.html"><img src="images/home-icon.svg" alt=""> Home</a></li>
+          <li><a href="ai_diagnosis.html"><img src="images/diagnosis-icon.svg" alt=""> AI Diagnosis</a></li>
+          <li><a href="diagnosis_history.html"><img src="images/history-icon.svg" alt=""> Diagnosis History</a></li>
+          <li><a href="settings.html"><img src="images/settings-icon.svg" alt=""> Settings</a></li>
+          <li><a href="support.html" class="active"><img src="images/support-icon.svg" alt=""> Support</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1>Support</h1>
+      <div class="content-box">
+        <h2>Help & Frequently Asked Questions (FAQ)</h2>
+
+        <div class="faq-item">
+          <h3>Use "AI Diagnosis" to enter symptoms and get suggestions</h3>
+          <p>The function uses questions to filter symptoms and suggestions based on the information you provide.</p>
+        </div>
+        <div class="faq-item">
+          <h3>How accurate is the AI Diagnosis?</h3>
+          <p>Our AI Diagnosis tool provides suggestions based on common patterns and medical knowledge. However, it is
+            for informational purposes only and should not replace a consultation with a qualified healthcare
+            professional. Always seek medical advice for any health concerns.</p>
+        </div>
+        <div class="faq-item">
+          <h3>Is my data secure?</h3>
+          <p>We take data privacy and security seriously. For logged-in users, your diagnosis history is stored
+            securely. Please review our Privacy Policy for more details (link to be added).</p>
+        </div>
+        <div class="faq-item">
+          <h3>Can I use this service as a guest?</h3>
+          <p>Yes, you can use the AI Diagnosis feature as a guest. However, your diagnosis history will not be saved.
+            Signing up allows for a personalized experience and history tracking.</p>
+        </div>
+        <div class="faq-item">
+          <h3>What if I forget my password?</h3>
+          <p>If you forget your password, you can use the "Forgot Password" link on the login page to reset it. An email
+            will be sent to your registered email address with instructions.</p>
+        </div>
+        <!-- Add more FAQ items as needed -->
+      </div>
+
+      <div class="info-box important" style="background-color: var(--yellow-warn); border-left-color: #FF8F00;">
+        <p>If you have any technical issues, please contact: support@healthai.vn</p>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <!-- Using Vietnamese in footer as per settings page screenshot -->
+    <p>Hỗ trợ: 1900 XXXX | Email: hotro@chandoanai.com</p>
+    <p>© 2025 Hệ thống Chẩn đoán Sức khỏe AI. Bảo lưu mọi quyền.</p>
+  </footer>
+
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="images/chatbot-icon.svg" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn"><img src="images/close-icon.svg" alt="Close"></button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello Ann! Looking for help? Check out the FAQs or ask me a question.</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Enter message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

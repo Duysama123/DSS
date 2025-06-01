@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Health Expert System{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+  <header>
+    <div class="user-nav">
+      {% if session.get('user_id') %}
+      <img src="{{ url_for('static', filename='images/avatar.png') }}" alt="User Avatar" class="avatar">
+      <span>{{ session.get('username', 'User') }}</span>
+      <img src="{{ url_for('static', filename='images/dropdown-arrow.png') }}" alt="Dropdown" class="dropdown-arrow">
+      <div class="dropdown-menu">
+        <a href="{{ url_for('settings') }}">View Profile</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      </div>
+      {% else %}
+      <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="sidebar">
+      <h2>Main functions</h2>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">
+              <img src="{{ url_for('static', filename='images/home-icon.svg') }}" alt="Home">Home
+            </a></li>
+          <li><a href="{{ url_for('ai_diagnosis') }}">
+              <img src="{{ url_for('static', filename='images/diagnosis-icon.svg') }}" alt="AI Diagnosis">AI Diagnosis
+            </a></li>
+          {% if session.get('user_id') %}
+          <li><a href="{{ url_for('diagnosis_history') }}">
+              <img src="{{ url_for('static', filename='images/history-icon.svg') }}" alt="History">Diagnosis History
+            </a></li>
+          <li><a href="{{ url_for('settings') }}">
+              <img src="{{ url_for('static', filename='images/settings-icon.svg') }}" alt="Settings">Settings
+            </a></li>
+          {% endif %}
+          <li><a href="{{ url_for('support') }}">
+              <img src="{{ url_for('static', filename='images/support-icon.svg') }}" alt="Support">Support
+            </a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="main-content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Health Expert System. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Define Flask URLs in JavaScript
+    window.aiDiagnosisUrl = "{{ url_for('ai_diagnosis') }}";
+    // Add other URLs here if needed later
+  </script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <!-- Chatbot HTML -->
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="{{ url_for('static', filename='images/chatbot-icon.svg') }}" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn">X</button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello! I am the AI Chatbot of the Health Diagnosis system. How can I help you?</div>
+      <!-- Chat messages will be added here by JS -->
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Type your message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    // Basic Chatbot JS (move to script.js later if it gets complex)
+    const chatbotIconContainer = document.getElementById('chatbotIconContainer');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotCloseBtn = document.getElementById('chatbotCloseBtn');
+    const chatbotSendBtn = document.getElementById('chatbotSendBtn');
+    const chatUserMessageInput = document.getElementById('chatUserMessage');
+    const chatbotMessages = chatbotWindow.querySelector('.chatbot-messages');
+
+    // Toggle chatbot window
+    if (chatbotIconContainer) {
+      chatbotIconContainer.addEventListener('click', () => {
+        if (chatbotWindow) {
+          chatbotWindow.classList.toggle('open');
+        }
+      });
+    }
+
+    // Close chatbot window
+    if (chatbotCloseBtn) {
+      chatbotCloseBtn.addEventListener('click', () => {
+        if (chatbotWindow) {
+          chatbotWindow.classList.remove('open');
+        }
+      });
+    }
+
+    // Send message (basic example)
+    function sendMessage() {
+      const messageText = chatUserMessageInput.value.trim();
+      if (messageText) {
+        // Add user message
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.classList.add('chat-message', 'user');
+        userMessageDiv.textContent = messageText;
+        chatbotMessages.appendChild(userMessageDiv);
+
+        // Scroll to bottom
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+        // Clear input immediately
+        chatUserMessageInput.value = '';
+
+        // Add a placeholder for the bot response while waiting
+        const botLoadingDiv = document.createElement('div');
+        botLoadingDiv.classList.add('chat-message', 'bot', 'loading');
+        botLoadingDiv.textContent = 'Typing...'; // Or a loading indicator
+        chatbotMessages.appendChild(botLoadingDiv);
+        // Scroll to bottom after adding loading message
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+        // Send message to backend chatbot endpoint
+        fetch("{{ url_for('chatbot') }}", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: messageText })
+        })
+          .then(response => {
+            // Remove loading message
+            botLoadingDiv.remove();
+            if (!response.ok) {
+              // Handle HTTP errors
+              console.error('HTTP error!', response.status, response.statusText);
+              return response.json().then(err => {
+                throw new Error(`Backend error: ${err.response || response.statusText}`);
+              });
+            }
+            return response.json();
+          })
+          .then(data => {
+            // Add bot message
+            const botMessageDiv = document.createElement('div');
+            botMessageDiv.classList.add('chat-message', 'bot');
+            // Assuming the backend sends a JSON object like { response: "..." }
+            botMessageDiv.textContent = data.response;
+            chatbotMessages.appendChild(botMessageDiv);
+
+            // Scroll to bottom
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+          })
+          .catch((error) => {
+            // Handle network errors or errors from the backend
+            console.error('Error:', error);
+            botLoadingDiv.remove(); // Remove loading message on error
+            const errorMessageDiv = document.createElement('div');
+            errorMessageDiv.classList.add('chat-message', 'bot', 'error');
+            errorMessageDiv.textContent = `Error: ${error.message || 'Could not get response.'}`; // Display error message
+            chatbotMessages.appendChild(errorMessageDiv);
+            // Scroll to bottom after adding error message
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+          });
+
+        // Remove the old basic bot response
+        // setTimeout(() => {
+        //   const botMessageDiv = document.createElement('div');
+        //   botMessageDiv.classList.add('chat-message', 'bot');
+        //   botMessageDiv.textContent = "This is a test response to: " + messageText;
+        //   chatbotMessages.appendChild(botMessageDiv);
+        //   chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        // }, 500);
+
+        // Remove the old clear input - moved to after sending
+        // chatUserMessageInput.value = '';
+      }
+    }
+
+    if (chatbotSendBtn) {
+      chatbotSendBtn.addEventListener('click', sendMessage);
+    }
+
+    if (chatUserMessageInput) {
+      chatUserMessageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault(); // Prevent newline
+          sendMessage();
+        }
+      });
+    }
+
+  </script>
+</body>
+
+</html>

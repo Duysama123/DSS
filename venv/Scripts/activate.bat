@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\health_dss\venv
+set VIRTUAL_ENV=C:\Users\FPTSHOP\Desktop\rS\HK2-2025\DSS\DSS\venv
 
 if not defined PROMPT set PROMPT=$P$G
 

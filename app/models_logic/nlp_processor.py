@@ -5,6 +5,7 @@ import json
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer, WordNetLemmatizer # Import cả hai để dễ chuyển đổi
+from nltk.tokenize import wordpunct_tokenize
 from fuzzywuzzy import process
 
 # --- Tải tài nguyên NLTK một lần khi module được import ---
@@ -27,6 +28,8 @@ try:
 except LookupError:
     nltk.download('omw-1.4', quiet=True)
 
+# Ensure punkt is downloaded and available
+nltk.download('punkt', quiet=True)
 
 # --- Biến toàn cục của module ---
 SYMPTOM_LEXICON = {}
@@ -117,7 +120,8 @@ def preprocess_text_english(text_input):
     text = str(text_input).lower()
     text = re.sub(r'[^\w\s-]', '', text) # Loại bỏ dấu câu, giữ lại gạch nối
     
-    tokens = nltk.word_tokenize(text)
+    # Use wordpunct_tokenize instead of word_tokenize
+    tokens = wordpunct_tokenize(text)
     
     # Sử dụng Stemming hoặc Lemmatization
     # processed_tokens = [STEMMER.stem(word) for word in tokens if word not in STOP_WORDS and len(word) > 1]

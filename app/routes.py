@@ -15,6 +15,9 @@ from .models_logic import ml_model_loader
 from .models_logic import nlp_processor # Import NLP processor
 from .models_logic.rule_based_engine import apply_rules_from_file, load_rules_from_file as load_rb_rules
 
+# Thêm định nghĩa biến mặc định ở đây
+DEFAULT_USERNAME = "user"
+DEFAULT_PASSWORD = "password"
 
 def get_wikipedia_info(disease_name_standardized):
     """
@@ -197,11 +200,143 @@ initial_setup() # Chạy một lần khi ứng dụng khởi động
 
 
 @app.route('/')
-@app.route('/index')
 def index():
-    # symptoms_list được truyền vào template có thể dùng để gợi ý hoặc debug,
-    # nhưng input chính sẽ là từ textarea
-    return render_template('index.html', title='Health Diagnosis Expert System', symptoms_list_for_reference=SYMPTOMS_AVAILABLE_FOR_UI)
+    if 'user_id' in session:
+        # Lấy lịch sử chẩn đoán từ session, mặc định là list rỗng nếu chưa có
+        user_history = session.get('diagnosis_history', [])
+        # Lấy 2 mục lịch sử gần nhất
+        recent_activity = user_history[-2:] # Lấy 2 mục cuối cùng (gần nhất)
+        # Truyền dữ liệu hoạt động gần đây đến template home_loggedin.html
+        return render_template('home_loggedin.html', recent_activity=recent_activity)
+    return render_template('home_public.html')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Biến để lưu thông báo lỗi
+    error = None
+    print(f"DEBUG LOGIN - Request Method: {request.method}") # Debug print
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        
+        print(f"DEBUG LOGIN - Received Username: '{username}'") # Debug print
+        print(f"DEBUG LOGIN - Received Password: '{password}'") # Debug print
+        print(f"DEBUG LOGIN - Expected Username: '{DEFAULT_USERNAME}'") # Debug print
+        print(f"DEBUG LOGIN - Expected Password: '{DEFAULT_PASSWORD}'") # Debug print
+
+        # Kiểm tra thông tin đăng nhập
+        if username == DEFAULT_USERNAME and password == DEFAULT_PASSWORD:
+            print("DEBUG LOGIN - Credentials Match!") # Debug print
+            # Đăng nhập thành công
+            session['user_id'] = username # Lưu ID người dùng vào session (có thể dùng username làm tạm)
+            session['username'] = username # Lưu tên người dùng vào session
+            print(f"DEBUG LOGIN - Session User ID Set: {session.get('user_id')}") # Debug print
+            print(f"User '{username}' logged in successfully.")
+            # Chuyển hướng đến trang AI Diagnosis
+            return redirect(url_for('ai_diagnosis'))
+        else:
+            print("DEBUG LOGIN - Credentials Mismatch.") # Debug print
+            # Đăng nhập thất bại
+            error = 'Invalid Credentials. Please try again.'
+            print(f"Failed login attempt for username: '{username}'")
+
+    # Render trang login.html, truyền thông báo lỗi (nếu có)
+    return render_template('login.html', error=error)
+
+@app.route('/before-login')
+def before_login():
+    return render_template('before-login.html')
+
+@app.route('/ai-diagnosis')
+def ai_diagnosis():
+    # Removed login check to allow public access
+    # if 'user_id' not in session:
+    #     return redirect(url_for('login'))
+    return render_template('ai_diagnosis.html', symptoms_list=SYMPTOMS_AVAILABLE_FOR_UI)
+
+@app.route('/ai-diagnosis-results')
+def ai_diagnosis_results():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('ai_diagnosis_results.html')
+
+@app.route('/diagnosis-history')
+def diagnosis_history():
+    if 'user_id' not in session:
+        # Nếu chưa đăng nhập, chuyển hướng về trang login
+        return redirect(url_for('login'))
+    
+    # Lấy lịch sử chẩn đoán từ session, mặc định là list rỗng nếu chưa có
+    user_history = session.get('diagnosis_history', [])
+    
+    # Truyền dữ liệu lịch sử đến template
+    return render_template('diagnosis_history.html', history_data=user_history)
+
+@app.route('/settings')
+def settings():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('settings.html')
+
+@app.route('/support')
+def support():
+    return render_template('support.html')
+
+# ... other imports and code ...
+
+@app.route('/chatbot', methods=['POST'])
+def chatbot():
+    print("DEBUG: Chatbot endpoint hit!") # Add this line
+    data = request.get_json()
+    user_message = data.get('message')
+
+    if not user_message:
+        return jsonify({'response': 'Error: No message provided.'}), 400
+
+    # ... rest of the chatbot function code ...
+
+    # Replace with your actual OpenRouter API key
+    OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY") # It's recommended to use environment variables
+    if not OPENROUTER_API_KEY:
+         # Using a placeholder message for now. Replace with actual API call.
+         print("OPENROUTER_API_KEY not set. Using placeholder response.")
+         bot_response = f"You said: {user_message}. (OpenRouter API key not configured)"
+    else:
+        # --- Placeholder for OpenRouter API call ---
+        # You will need to replace this section with code to call the OpenRouter API.
+        # Example using requests library:
+        try:
+            response = requests.post(
+                url="https://openrouter.ai/api/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "meta-llama/llama-3-8b-instruct",  # Specify Llama 3 8B model
+                    "messages": [{"role": "user", "content": user_message}],
+                    "temperature": 0.7,
+                    "max_tokens": 500
+                }
+            )
+            response.raise_for_status() # Raise an HTTPError for bad responses (4xx or 5xx)
+            api_response_data = response.json()
+            # Adjust according to the actual API response structure
+            bot_response = api_response_data['choices'][0]['message']['content']
+        except requests.exceptions.RequestException as e:
+            print(f"Error calling OpenRouter API: {e}")
+            bot_response = "Sorry, I couldn't connect to the AI service right now."
+        # --- End Placeholder ---
+
+    return jsonify({'response': bot_response})
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('username', None)
+    # TODO: Redirect to login page
+    # CORRECTED: Redirect to the login page after logging out
+    return redirect(url_for('login'))
 
 @app.route('/diagnose', methods=['POST'])
 def diagnose():
@@ -271,6 +406,41 @@ def diagnose():
         else:
             orchestrated_results.append({"info": "No specific diagnosis could be determined by AI or Rules."})
 
+        # --- Process orchestrated_results for template details ---
+        orchestrated_results_with_details = []
+
+        if orchestrated_results:
+            # Kiểm tra xem orchestrated_results có phải là list chứa dict không, và không phải là message info/error
+            is_structured_results = isinstance(orchestrated_results, list) and \
+                                    all(isinstance(item, dict) for item in orchestrated_results) and \
+                                    not (orchestrated_results and (orchestrated_results[0].get('info') or orchestrated_results[0].get('error')))
+
+            if is_structured_results:
+                for item in orchestrated_results:
+                    detail = {
+                        'disease': item.get('disease', 'Unknown Disease'),
+                        'type': item.get('type', 'unknown')
+                    }
+                    if item.get('type') == 'ml' and 'probability' in item:
+                        try:
+                            prob_str = str(item['probability']).strip('%').strip()
+                            prob_numeric = float(prob_str)
+                            # Giới hạn giá trị từ 0 đến 100 cho thanh bar
+                            prob_numeric_capped = min(max(prob_numeric, 0.1), 100) # 0.1 để thanh luôn hiển thị 1 chút
+
+                            detail['probability_display'] = f"{prob_numeric:.2f}"
+                            detail['probability_numeric'] = prob_numeric_capped
+                        except ValueError:
+                            detail['probability_display'] = item['probability'] # Hiển thị nguyên gốc nếu không parse được
+                            detail['probability_numeric'] = 0
+                    elif item.get('type') == 'rule':
+                        detail['confidence'] = item.get('confidence', 'N/A')
+                        detail['explanation'] = item.get('explanation')
+
+                    orchestrated_results_with_details.append(detail)
+            # Nếu orchestrated_results là message info/error, không cần gán vào orchestrated_results_with_details
+            # template sẽ tự xử lý phần `else` của `if results_data.orchestrated_results_with_details`
+
         # --- Lấy thông tin bổ sung (KHÔNG CÓ PRECAUTIONS NỮA) ---
         guidance_package = {"details": None, "wikipedia": None} # Bỏ "precautions"
         if primary_disease_for_guidance:
@@ -291,7 +461,8 @@ def diagnose():
             "user_text_input": user_text_input if user_text_input else "N/A (Checkbox input might have been used)",
             "extracted_symptoms_for_display": processed_symptoms_list,
             "source_of_primary_diagnosis": source_of_primary_diagnosis,
-            "orchestrated_results": orchestrated_results,
+            "orchestrated_results": orchestrated_results, # Vẫn truyền kết quả gốc để xử lý info/error
+            "orchestrated_results_with_details": orchestrated_results_with_details, # Truyền list mới cho các card chi tiết
             "guidance_package": guidance_package # Giờ chỉ có details và wikipedia
         }
         
@@ -299,24 +470,30 @@ def diagnose():
         if 'diagnosis_history' not in session:
             session['diagnosis_history'] = []
         
-        # Tạo một bản ghi lịch sử tóm tắt
+        # Tạo một bản ghi lịch sử TÓM TẮT trước đó, giờ sẽ lưu ĐẦY ĐỦ hơn
         history_entry = {
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "user_input_text": results_payload.get("user_text_input", "N/A"),
             "processed_symptoms": results_payload.get("extracted_symptoms_for_display", []),
-            # Chỉ lưu thông tin tóm tắt của kết quả chính, ví dụ:
+            # Lưu kết quả tóm tắt chính (đã có)
             "primary_source": results_payload.get("source_of_primary_diagnosis"),
             "primary_diagnosis": None, # Sẽ được điền bên dưới
-            # "ml_top_prediction": results_payload.get("ml_predictions_display")[0] if results_payload.get("ml_predictions_display") and results_data.ml_predictions_display[0] and not results_data.ml_predictions_display[0].get("error") else None,
-            # "rule_top_conclusion": results_payload.get("rule_based_conclusions_display")['diagnoses'][0] if results_payload.get("rule_based_conclusions_display") and results_payload.rule_based_conclusions_display.get("diagnoses") else None
+            "primary_confidence_or_probability": None, # Sẽ được điền bên dưới
+
+            # >>> THÊM CÁC TRƯỜNG CHI TIẾT KHÁC <<< 
+            "orchestrated_results_with_details": results_payload.get("orchestrated_results_with_details", []), # Lưu list chi tiết cho các card gợi ý
+            "guidance_package": results_payload.get("guidance_package", {}) # Lưu package guidance và wikipedia
+            # >>> KẾT THÚC THÊM <<<
         }
 
-        # Lấy chẩn đoán chính để lưu vào lịch sử
+        # Lấy chẩn đoán chính để lưu vào lịch sử (giữ nguyên)
         orchestrated_results = results_payload.get("orchestrated_results", [])
         if orchestrated_results and orchestrated_results[0] and not orchestrated_results[0].get("info") and not orchestrated_results[0].get("error"):
             history_entry["primary_diagnosis"] = orchestrated_results[0].get("disease", "Unknown")
             if orchestrated_results[0].get("type") == "ml":
-                 history_entry["primary_confidence_or_probability"] = orchestrated_results[0].get("probability")
+                 # Lấy giá trị numeric/display tùy cái nào có
+                 primary_prob = orchestrated_results[0].get("probability_display") or orchestrated_results[0].get("probability")
+                 history_entry["primary_confidence_or_probability"] = primary_prob
             elif orchestrated_results[0].get("type") == "rule":
                  history_entry["primary_confidence_or_probability"] = orchestrated_results[0].get("confidence")
 
@@ -331,9 +508,3 @@ def diagnose():
         return render_template('results.html', title='Diagnosis Results', results_data=results_payload)
     
     return redirect(url_for('index'))
-@app.route('/history')
-def history():
-    diagnosis_history = session.get('diagnosis_history', [])
-    # Sắp xếp lịch sử từ mới nhất đến cũ nhất để hiển thị
-    sorted_history = sorted(diagnosis_history, key=lambda x: x['timestamp'], reverse=True)
-    return render_template('history.html', title='Diagnosis History', history_list=sorted_history)

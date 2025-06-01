@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - AI Health Diagnosis System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="login-page">
+  <div class="login-header-section">
+    <!-- Placeholder for doctor image -->
+    <img src="images/handdrawn_vector_61-removebg.png" alt="Doctor Illustration" class="doctor-illustration">
+    <div class="login-title-container">
+      <h1 class="login-page-title">Health Diagnosis Expert System</h1>
+      <p class="login-page-subtitle">Welcome to disease diagnosis system</p>
+    </div>
+  </div>
+
+  <div class="login-container">
+    <div class="login-wrapper">
+      <div class="login-box">
+        <img src="images/user-icon-login.svg" alt="User Icon" class="user-icon">
+        <h2>Public User</h2>
+        <p>Access the diagnosis system without logging in. Your history will not be saved.</p>
+        <a href="home_public.html" class="btn btn-secondary">Select Public Role</a>
+      </div>
+
+      <div class="login-box">
+        <img src="images/user-icon-login.svg" alt="User Icon" class="user-icon">
+        <h2>Logged-in User</h2>
+        <form action="home_loggedin.html" method="GET">
+          <div class="form-group">
+            <label for="name" class="sr-only">Name</label>
+            <input type="text" id="name" name="name" placeholder="Name (e.g., Ann)" required>
+          </div>
+          <div class="form-group">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login Now</button>
+        </form>
+        <p style="margin-top:10px; font-size:0.8em;">Login to access personalized features, save history and results.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="images/chatbot-icon.svg" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn"><img src="images/close-icon.svg" alt="Close"></button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello! I am the AI Chatbot of the Health Diagnosis system. How can I help you?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Type your message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Support: 1900 XXXX | Email: hotro@chandoanai.com</p>
+    <p>© 2025 AI Health Diagnosis System. All rights reserved.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Home - AI Health Diagnosis System{% endblock %}
+
+{% block content %}
+<div class="welcome-banner">
+  <h1>Welcome back, {{ session.get('username', 'User') }}!</h1>
+  <p>Ready to check your health?</p>
+  <a href="{{ url_for('ai_diagnosis') }}" class="btn btn-secondary">Start new diagnosis</a>
+</div>
+
+<div class="home-grid">
+  <div class="card recent-activity">
+    <h2>Recent activity</h2>
+    {% if recent_activity %}
+    <!-- Last Diagnosis -->
+    <div class="activity-item">
+      <h3>Last Diagnosis</h3>
+      {% set last_diagnosis = recent_activity[-1] %}
+      <p>
+        <strong>Date:</strong> {{ last_diagnosis.timestamp }} <br>
+        <strong>Symptoms:</strong> {{ last_diagnosis.processed_symptoms | join(', ') if
+        last_diagnosis.processed_symptoms else last_diagnosis.user_input_text }} <br>
+        <strong>Results suggest:</strong> {{ last_diagnosis.primary_diagnosis | replace('_', ' ') | title if
+        last_diagnosis.primary_diagnosis else 'No Diagnosis' }}
+      </p>
+    </div>
+    {% if recent_activity | length > 1 %}
+    <!-- Previous Diagnosis -->
+    <div class="activity-item">
+      <h3>Previous Diagnosis</h3>
+      {% set previous_diagnosis = recent_activity[-2] %}
+      <p>
+        <strong>Date:</strong> {{ previous_diagnosis.timestamp }} <br>
+        <strong>Symptoms:</strong> {{ previous_diagnosis.processed_symptoms | join(', ') if
+        previous_diagnosis.processed_symptoms else previous_diagnosis.user_input_text }} <br>
+        <strong>Results suggest:</strong> {{ previous_diagnosis.primary_diagnosis | replace('_', ' ') | title if
+        previous_diagnosis.primary_diagnosis else 'No Diagnosis' }}
+      </p>
+    </div>
+    {% endif %}
+    {% else %}
+    <p>No recent activity found. Perform a diagnosis to see your history here.</p>
+    {% endif %}
+  </div>
+  <div class="card health-tips">
+    <h2>Health tips</h2>
+    <ul>
+      <li class="health-tip-item">Drinking enough 2 liters of water every day helps your body function better and
+        maintain healthy skin.</li>
+      <li class="health-tip-item">Get enough sleep 7-8 hours every night to restore energy and strengthen the immune
+        system.</li>
+      <li class="health-tip-item">Spend at least 30 minutes a day doing physical exercise.</li>
+      <li class="health-tip-item">Maintain a balanced diet with plenty of fruits and vegetables.</li>
+      <li class="health-tip-item">Practice stress-reducing techniques like meditation or deep breathing.</li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

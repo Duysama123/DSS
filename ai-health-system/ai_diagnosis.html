@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Diagnosis - AI Health Diagnosis System</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header>
+    <!-- Logged In Header (assuming user is Ann for this page by default) -->
+    <div class="user-nav">
+      <img src="images/home-icon.svg" alt="Home" class="icon">
+      <img src="images/user-avatar.png" alt="User Avatar" class="avatar">
+      <span>Ann</span>
+      <svg class="dropdown-arrow" viewBox="0 0 24 24">
+        <path d="M7 10l5 5 5-5z" />
+      </svg>
+      <div class="dropdown-menu">
+        <a href="settings.html">Profile</a>
+        <a href="login.html">Logout</a>
+      </div>
+    </div>
+    <!-- OR Public Header -->
+    <!--
+        <div class="user-nav">
+            <img src="images/home-icon.svg" alt="Sign In" class="icon">
+            <span>Sign in</span>
+            <svg class="dropdown-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            <div class="dropdown-menu">
+                <a href="login.html">Login/Register</a>
+            </div>
+        </div>
+        -->
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Main function</h2>
+      <nav>
+        <ul>
+          <li><a href="home_loggedin.html"><img src="images/home-icon.svg" alt=""> Home</a></li>
+          <li><a href="ai_diagnosis.html" class="active"><img src="images/diagnosis-icon.svg" alt=""> AI Diagnosis</a>
+          </li>
+          <li><a href="diagnosis_history.html"><img src="images/history-icon.svg" alt=""> Diagnosis History</a></li>
+          <li><a href="settings.html"><img src="images/settings-icon.svg" alt=""> Settings</a></li>
+          <li><a href="support.html"><img src="images/support-icon.svg" alt=""> Support</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1>AI Diagnosis</h1>
+      <div class="content-box">
+        <h2>AI Diagnosis - Providing Information</h2>
+        <form action="ai_diagnosis_results.html" method="GET"> <!-- GET for demo -->
+          <div class="form-group">
+            <label for="symptoms">Describe your symptoms in detail:</label>
+            <textarea id="symptoms" name="symptoms" rows="5"
+              placeholder="Example: I have a persistent dry cough, mild fever for 2 days, and body aches."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="medicalHistory">Medical history (if any, one line for each disease):</label>
+            <textarea id="medicalHistory" name="medicalHistory" rows="3"
+              placeholder="Example: Asthma (diagnosed 2010)\nHypertension (taking Amlodipine 5mg daily)"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">View diagnostic results</button>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    <p>Support: 1900 XXXX | Email: hotro@chandoanai.com</p>
+    <p>© 2025 AI Health Diagnosis System. All rights reserved.</p>
+  </footer>
+
+  <div class="chatbot-icon-container" id="chatbotIconContainer">
+    <img src="images/chatbot-icon.svg" alt="Chatbot" id="chatbotIcon">
+  </div>
+  <div class="chatbot-window" id="chatbotWindow">
+    <div class="chatbot-header">
+      <h3>Chat AI Support</h3>
+      <button class="chatbot-close-btn" id="chatbotCloseBtn"><img src="images/close-icon.svg" alt="Close"></button>
+    </div>
+    <div class="chatbot-messages">
+      <div class="chat-message bot">Hello! How can I assist with your AI Diagnosis?</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatUserMessage" placeholder="Enter message...">
+      <button id="chatbotSendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>

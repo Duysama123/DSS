@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnosis History - AI Health Diagnosis System{% endblock %}
+
+{% block content %}
+<h1>Diagnosis History</h1>
+<div class="history-layout">
+  <div class="history-list-container content-box">
+    <div class="search-bar-container">
+      <input type="text" placeholder="Search for symptoms, results, date, diagnosis...">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>User Input</th>
+          <th>Processed Symptoms</th>
+          <th>Primary Diagnosis</th>
+          <th>Confidence/Probability</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Loop through history_data passed from the route -->
+        {% if history_data %}
+        {% for entry in history_data %}
+        <tr class="history-row" data-history-index="{{ loop.index0 }}">
+          <td>{{ entry.timestamp }}</td>
+          <td>{{ entry.user_input_text if entry.user_input_text and entry.user_input_text != 'N/A (Checkbox input might
+            have been used)' else 'Checkbox Input' }}</td>
+          <td>
+            {% if entry.processed_symptoms and entry.processed_symptoms|length > 0 %}
+            {{ entry.processed_symptoms | join(', ') }}
+            {% else %}
+            N/A
+            {% endif %}
+          </td>
+          <td>{{ entry.primary_diagnosis | replace('_', ' ') | title if entry.primary_diagnosis else 'No Diagnosis' }}
+          </td>
+          <td>{{ entry.primary_confidence_or_probability if entry.primary_confidence_or_probability is not none else
+            'N/A' }}</td>
+          <td>
+            <!-- Add actions like View Details or Delete later if needed -->
+            <button class="btn btn-delete btn-sm"
+              onclick="alert('Delete function not implemented yet.')">Delete</button>
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td colspan="6">No diagnosis history found.</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="diagnostic-details-container">
+    <h2>Diagnostic Details</h2>
+    <p id="details-placeholder">Click on a history entry to see full details here.</p>
+
+    <!-- Area to display detailed results -->
+    <div id="detailed-results-area" style="display: none;">
+      <!-- Basic Info (repeated from table for clarity) -->
+      <div class="detail-item">
+        <strong>Date:</strong>
+        <span id="detailDate"></span>
+      </div>
+      <div class="detail-item">
+        <strong>User Input:</strong>
+        <span id="detailUserInput"></span>
+      </div>
+      <div class="detail-item">
+        <strong>Processed Symptoms:</strong>
+        <span id="detailProcessedSymptoms"></span>
+      </div>
+      <div class="detail-item">
+        <strong>Primary Diagnosis:</strong>
+        <span id="detailPrimaryDiagnosis"></span>
+      </div>
+      <div class="detail-item">
+        <strong>Confidence/Probability:</strong>
+        <span id="detailConfidenceProbability"></span>
+      </div>
+      <hr>
+
+      <!-- Recommendation Section -->
+      <div class="detail-item">
+        <strong>Recommendation:</strong>
+        <span id="detailRecommendation"></span>
+      </div>
+      <hr>
+
+      <!-- Diagnostic Suggestions Section (from orchestrated_results_with_details) -->
+      <div id="detailed-suggestions" class="result-section card"
+        style="box-shadow: none; border: none; padding: 0; margin-top: 15px;">
+        <h3>Diagnostic Suggestions:</h3>
+        <!-- Suggestions will be rendered by JS here -->
+        <div class="diagnostic-suggestions-grid">
+          <!-- Suggestions cards will be injected here by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Guidance Section (from guidance_package.details) -->
+      <div id="detailed-guidance" class="result-section card guidance-text"
+        style="box-shadow: none; border: none; padding: 0; margin-top: 15px;">
+        <h3>Guidance:</h3>
+        <!-- Guidance content will be rendered by JS here -->
+      </div>
+
+      <!-- Wikipedia Section (from guidance_package.wikipedia) -->
+      <div id="detailed-wikipedia" class="result-section card justified-text"
+        style="box-shadow: none; border: none; padding: 0; margin-top: 15px;">
+        <h3>Further General Information (from Wikipedia):</h3>
+        <!-- Wikipedia content will be rendered by JS here -->
+      </div>
+
+      <!-- Disclaimer (Optional, could keep the one at the bottom of base.html) -->
+      {#
+      <div class="result-section card"
+        style="background-color: #f8f9fa; border-left: 4px solid #6c757d; box-shadow: none; padding: 15px; margin-top: 15px;">
+        <p style="font-size: 0.85em; color: #495057; margin:0;">
+          <strong>Important Disclaimer:</strong> This system provides preliminary health assessments... (full text)
+        </p>
+      </div>
+      #}
+
+    </div>
+  </div>
+</div>
+
+{# Data will be stored in a data attribute of this hidden div for JS to access #}
+<div id="history-data-json" data-history='{{ history_data | tojson | safe }}' style="display: none;"></div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // The script.js will read data from the #history-data-json div's data attribute
+  // and populate window.HISTORY_DATA
+  console.log("DEBUG JS - diagnosis_history.html block extra_js executed.");
+</script>
+{% endblock %}

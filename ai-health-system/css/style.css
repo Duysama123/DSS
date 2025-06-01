@@ -1,0 +1,778 @@
+/* Poppins Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #90CAF9; /* Light blue to replace primary purple */
+    --secondary-color: #E3F2FD; /* Very light blue to replace secondary purple */
+    --accent-color: #E91E63; /* Pink for buttons/warnings */
+    --text-color: #333;
+    --text-light: #555;
+    --border-color: #BDBDBD;
+    --white: #FFFFFF;
+    --blue: #1976D2; /* Darker blue for specific elements */
+    --yellow-warn: #FFF9C4; /* Light yellow for informational messages */
+    --red-warn: #FFEBEE; /* Light red for warnings */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #FFF8E1; /* Creamy background for the whole page */
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--white);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.user-nav {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.user-nav img.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.user-nav img.icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.user-nav span {
+    font-weight: 500;
+}
+
+.user-nav .dropdown-arrow {
+    width: 12px;
+    height: 12px;
+    margin-left: 5px;
+    fill: var(--text-color);
+}
+
+/* Basic dropdown (JS needed for toggle) */
+.dropdown-menu {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    min-width: 120px;
+    z-index: 1001;
+}
+.dropdown-menu a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 0.9em;
+}
+.dropdown-menu a:hover {
+    background-color: var(--secondary-color);
+}
+.user-nav:hover .dropdown-menu { /* Simple hover for demo, JS better */
+    /* display: block; */ /* Enable this for hover, or use JS */
+}
+
+
+.container {
+    display: flex;
+    flex-grow: 1;
+    padding-top: 20px;
+    position: relative;
+}
+
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background-color: var(--white);
+    padding: 20px;
+    height: calc(100vh - 70px - 60px);
+    position: fixed;
+    top: 70px;
+    left: 0;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.sidebar h2 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: var(--text-light);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar nav ul li a img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    filter: grayscale(50%) opacity(0.7); /* Adjust icon color */
+}
+
+.sidebar nav ul li a:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color-dark); /* A darker shade of purple */
+}
+
+.sidebar nav ul li a.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.sidebar nav ul li a.active img {
+    filter: brightness(0) invert(1);
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px 30px;
+    background-color: var(--secondary-color);
+    margin-left: 250px;
+    min-height: calc(100vh - 70px - 60px);
+}
+
+.content-box {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+.content-box h1, .main-content > h1 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.main-content h2 { /* For sub-headings within content */
+    font-size: 1.3em;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+.main-content p, .main-content li {
+    margin-bottom: 10px;
+    color: var(--text-light);
+}
+.main-content ul {
+    padding-left: 20px;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95em;
+}
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #aaa;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s;
+}
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+.btn-primary:hover {
+    background-color: #c2185b; /* Darker pink */
+}
+.btn-secondary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+.btn-secondary:hover {
+    background-color: #b39ddb; /* Darker light purple */
+}
+.btn-delete {
+    background-color: #f44336;
+    color: white;
+}
+.btn-delete:hover {
+    background-color: #d32f2f;
+}
+
+
+/* Alert/Info Boxes */
+.info-box {
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    border-left-width: 5px;
+    border-left-style: solid;
+}
+.info-box p { margin-bottom: 0; }
+
+.info-box.warning {
+    background-color: var(--red-warn);
+    border-left-color: #d32f2f; /* Darker red */
+    color: #b71c1c;
+}
+.info-box.important {
+    background-color: var(--yellow-warn);
+    border-left-color: #FBC02D; /* Darker yellow */
+    color: #795548;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 0.9em;
+}
+th {
+    background-color: var(--secondary-color);
+    font-weight: 600;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+footer {
+    background-color: #f0f0f0;
+    color: var(--text-light);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+    margin-top: auto;
+    margin-left: 250px;
+    width: calc(100% - 250px);
+}
+footer p {
+    margin-bottom: 5px;
+}
+
+/* Chatbot */
+.chatbot-icon-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block; /* Ensure it's always visible when enabled */
+}
+
+.chatbot-icon-container.hidden {
+    display: none;
+}
+
+.chatbot-icon-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--blue);
+    padding: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    pointer-events: none; /* Ensure clicks go to container */
+}
+
+.chatbot-window {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    width: 350px;
+    height: 450px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.chatbot-window.open {
+    display: flex;
+}
+
+.chatbot-header {
+    background-color: var(--blue);
+    color: var(--white);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chatbot-header h3 {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+.chatbot-close-btn {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.chatbot-close-btn img {
+    width: 18px;
+    height: 18px;
+    filter: invert(1);
+}
+
+.chatbot-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--secondary-color);
+}
+.chat-message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+.chat-message.user {
+    background-color: var(--primary-color);
+    color: var(--white);
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+.chat-message.bot {
+    background-color: #e0e0e0;
+    color: var(--text-color);
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+}
+
+.chatbot-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+}
+.chatbot-input input {
+    flex-grow: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 0.9em;
+}
+.chatbot-input button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.chatbot-input button:hover {
+    background-color: #1565C0; /* Darker blue */
+}
+
+/* Specific page styles */
+
+/* Login Page */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px - 60px);
+    padding: 20px;
+    background-color: var(--secondary-color);
+}
+.login-page-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
+    color: var(--blue);
+    font-weight: 600;
+}
+.login-page-subtitle {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-light);
+}
+.login-page-warning {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.login-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 800px; /* Max width for the two boxes */
+}
+
+.login-box {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    flex: 1; /* Equal width for both boxes */
+    border-top: 5px solid var(--primary-color);
+}
+.login-box h2 {
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 1.5em;
+}
+.login-box .user-icon {
+    width: 60px;
+    height: 60px;
+    margin: 15px auto;
+    fill: var(--primary-color); /* For SVGs */
+    color: var(--primary-color); /* For font icons */
+}
+.login-box p {
+    font-size: 0.9em;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+.login-box .btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Home Logged In */
+.welcome-banner {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.welcome-banner h1 {
+    margin-bottom: 5px;
+}
+.welcome-banner p {
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.home-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Recent activity wider */
+    gap: 20px;
+}
+.card {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.card h2 {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+    padding-bottom: 10px;
+}
+.activity-item, .health-tip-item {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+.activity-item:last-child, .health-tip-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.activity-item strong {
+    display: block;
+    color: var(--text-color);
+}
+
+/* Diagnosis History */
+.history-layout {
+    display: flex;
+    gap: 20px;
+}
+.history-list-container {
+    flex: 2; /* Takes more space */
+}
+.diagnostic-details-container {
+    flex: 1;
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    height: fit-content; /* So it doesn't stretch unnecessarily */
+}
+.diagnostic-details-container h2 {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+.detail-item {
+    margin-bottom: 12px;
+}
+.detail-item strong {
+    display: block;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 3px;
+}
+.detail-item span {
+    color: var(--text-light);
+}
+.search-bar-container {
+    margin-bottom: 20px;
+}
+.search-bar-container input[type="text"] {
+    padding: 10px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px; /* Rounded search bar */
+    width: 100%;
+}
+.login-box .user-icon {
+  width: 60px;  /* Or your desired size */
+  height: 60px; /* Or your desired size */
+  margin: 15px auto;
+  fill: var(--primary-color); /* This will work if your SVG has fill="currentColor" */
+  /* If the SVG has a hardcoded fill, you might need to edit the SVG or use CSS filter for color */
+}
+/* Toggle Switch Styles */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Login page specific styles - override the fixed sidebar layout */
+body.login-page .sidebar {
+    display: none; /* Hide sidebar on login page */
+}
+
+body.login-page .main-content {
+    margin-left: 0; /* Remove margin on login page */
+    padding: 0; /* Remove padding from main-content on login page */
+    background-color: transparent; /* Make background transparent to use body background */
+}
+
+body.login-page .container {
+    padding-top: 0;
+    display: block; /* Change to block layout for login page */
+}
+
+body.login-page footer {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* Styles for the new login page layout */
+.login-header-section {
+    display: flex; /* Use flexbox to arrange children side-by-side */
+    align-items: center; /* Vertically center align items */
+    justify-content: center; /* Horizontally center the content block */
+    padding: 40px 20px; /* Adjust padding */
+    background-color: #BBDEFB; /* Light blue background */
+    position: relative; /* Keep relative if needed for any future positioning */
+    overflow: hidden;
+    /* Increase padding bottom to make space for larger image height */
+    padding-bottom: 150px; /* Adjust this value based on desired overlap */
+}
+
+.doctor-illustration {
+    width: auto; /* Allow width to adjust based on height */
+    height: 350px; /* Increase height as needed */
+    margin-right: 30px; /* Space between image and text */
+    position: static; /* Ensure static positioning */
+    bottom: auto;
+    left: auto;
+    transform: none;
+    z-index: auto;
+    pointer-events: auto;
+}
+
+.login-title-container {
+    text-align: left;
+    max-width: 400px;
+    z-index: auto;
+    position: static;
+}
+
+.login-page-title {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.login-page-subtitle {
+    font-size: 1.2em;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: transparent;
+    margin-left: 0;
+    min-height: auto;
+    /* Pull container up more to overlap with the bottom of the image */
+    margin-top: -180px; /* Adjusted negative value for more overlap */
+    position: relative;
+    z-index: 2; /* Ensure login boxes are above header/image */
+}
+
+.login-wrapper {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    max-width: 800px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.login-box {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    flex: 1;
+    border-top: 5px solid var(--primary-color);
+}
+
+/* Ensure chatbot and footer are positioned correctly on login page */
+body.login-page .chatbot-icon-container {
+    /* Adjust if needed, might be fine with fixed positioning */
+}
+
+body.login-page .chatbot-window {
+     /* Adjust if needed, might be fine with fixed positioning */
+}
